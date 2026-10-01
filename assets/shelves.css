@@ -1,0 +1,35 @@
+.record-viewport{position:relative;isolation:isolate;width:100%;height:188px;overflow:clip;perspective:900px;touch-action:pan-y;cursor:grab}
+.record-viewport:active{cursor:grabbing}
+.record-stack{position:absolute;inset:0 0 18px;margin:0;padding:0;list-style:none;display:grid;place-items:end center;perspective:900px;perspective-origin:center bottom}
+.record-viewport[data-motion="instant"] .record-item{transition:none}
+.record-item{position:absolute;left:50%;bottom:0;width:clamp(112px,24vw,148px);height:auto;transform:translateX(calc(-50% + var(--record-offset,0px))) translateY(var(--record-rise,0px)) rotateY(var(--record-tilt,0deg)) scale(var(--record-scale,1));transform-style:preserve-3d;transform-origin:center bottom;transition:transform .48s cubic-bezier(.2,.75,.25,1);will-change:transform}
+.record-card{position:relative;display:block;aspect-ratio:1;padding:5px;border:1px solid #e5e1d8;border-radius:2px;background:#faf9f6;box-shadow:0 2px 4px #211e1712,2px 8px 18px #211e1724;transform:translateZ(2px);transition:box-shadow .35s,filter .35s;backface-visibility:hidden}
+.record-item[data-active] .record-card{box-shadow:0 5px 12px #211e1720,3px 18px 28px #211e1730}
+.record-card:hover{filter:brightness(1.04)}
+.record-cover{display:block;width:100%;height:100%;object-fit:cover;user-select:none;-webkit-user-drag:none}
+.record-caption,.book-annotation{display:flex;align-items:baseline;justify-content:center;gap:8px;min-height:25px;margin:2px 0 0;color:var(--muted);font-size:11px;line-height:1.5}
+.record-caption-title,.book-annotation-title{color:var(--ink);font-weight:600}
+.record-caption-artist,.book-annotation-author{font-size:10px}
+.book-stage{position:relative;width:100%;height:220px;overflow:clip;perspective:1100px;perspective-origin:center bottom}
+.book-stage::after{content:"";position:absolute;z-index:8;right:3px;bottom:8px;left:3px;height:8px;border:1px solid #d9d4c9;border-radius:2px;background:linear-gradient(#eeeae1,#d9d4ca);box-shadow:0 4px 9px #27231917;pointer-events:none}
+.book-shelf{position:absolute;inset:0 0 15px;display:flex;align-items:flex-end;justify-content:center;gap:1px;margin:0;padding:0 2px 12px;list-style:none;transform-style:preserve-3d}
+.book-frame{position:relative;z-index:1;flex:0 0 clamp(15px,3.7vw,22px);height:190px;transition:flex-basis .65s cubic-bezier(.22,.75,.18,1);transform-style:preserve-3d}
+.book-frame[data-active]{z-index:5;flex-basis:clamp(100px,22vw,138px)}
+.book-inner{position:absolute;left:0;bottom:0;display:block;width:clamp(100px,22vw,138px);height:188px;transform:rotateY(90deg);transform-origin:left center;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.22,.75,.18,1);outline-offset:3px}
+.book-frame[data-active] .book-inner{transform:rotateY(0)}
+.book-cover{position:absolute;inset:0;display:block;overflow:hidden;border:1px solid #ded9cf;border-radius:2px 4px 4px 2px;background:var(--paper);box-shadow:1px 2px 4px #211e1720,5px 12px 18px -10px #211e1740;transform:translateZ(11px);backface-visibility:hidden}
+.book-cover-art{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;user-select:none;-webkit-user-drag:none}
+.book-spine{position:absolute;top:0;bottom:0;left:0;display:flex;width:clamp(15px,3.7vw,22px);align-items:center;justify-content:center;gap:5px;overflow:hidden;border:1px solid #00000017;border-radius:2px;background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#d8d0c2;color:#514a3e;transform:rotateY(-90deg) translateZ(11px);transform-origin:left center;backface-visibility:hidden}
+.book-frame:nth-child(5n + 2) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#c6d0c3;color:#35463a}
+.book-frame:nth-child(5n + 3) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#c9c1d1;color:#443b50}
+.book-frame:nth-child(5n + 4) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#d3c2ac;color:#554331}
+.book-frame:nth-child(5n) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#c5cbd2;color:#39434d}
+.book-spine-title,.book-spine-author{overflow:hidden;max-height:calc(100% - 12px);font-size:7px;line-height:1;white-space:nowrap;writing-mode:vertical-rl;text-overflow:ellipsis}
+.book-spine-author{font-size:6px;opacity:.75}
+.book-inner:focus-visible{outline:1px solid var(--accent);border-radius:3px}
+.book-frame:hover{z-index:7}
+.book-frame:hover .book-inner{filter:brightness(1.04)}
+[data-theme="dark"] .record-card{border-color:#454239;background:#292823}
+[data-theme="dark"] .book-cover{border-color:#454239;background:#292823}
+@media(max-width:480px){.record-viewport{height:158px}.record-stack{inset:0 0 10px}.record-item{width:clamp(98px,31vw,124px)}.book-stage{height:202px}.book-frame{height:174px}.book-frame[data-active]{flex-basis:clamp(88px,27vw,112px)}.book-inner{width:clamp(88px,27vw,112px);height:172px}.book-spine-title{font-size:6px}.record-caption,.book-annotation{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.record-item,.record-card,.book-frame,.book-inner{transition:none!important;scroll-behavior:auto}}
