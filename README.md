@@ -1,6 +1,6 @@
 # 纳兰的个人主页
 
-这是一个独立的静态个人主页和文章站。无需账号系统、服务器或数据库；文章以 Markdown 文件保存，推送到 GitHub 后由 GitHub Actions 自动构建并部署到 GitHub Pages。
+这是一个独立的静态个人主页和文章站，保留主页介绍、照片入口、项目列表、音乐与书架、文章列表、文章阅读进度、底部悬浮导航等内容。无需账号系统、服务器或数据库；文章以 Markdown 文件保存，推送到 GitHub 后由 GitHub Actions 自动构建并部署到 GitHub Pages。主页的经历区已按需求移除。
 
 ## 本地预览
 
@@ -20,7 +20,7 @@ npm run build
    ```md
    ---
    title: "我的新文章"
-   date: "2026-10-02"
+   publishedAt: "2026-10-02T09:00:00.000Z"
    description: "一句话介绍文章"
    ---
 
@@ -31,7 +31,7 @@ npm run build
 
 这里的“发布文章”是把 Markdown 文件提交到 GitHub；网站没有在线后台编辑器或登录账号。
 
-图片可放在文章自己的文件夹中，并在正文使用 Markdown 图片语法；首次使用时也可以把图片放进 `assets/`，在文章中引用对应地址。
+图片可放在 `content/posts/my-thoughts/` 文件夹中，并在正文使用 `![图片说明](./图片名.jpg)` 引用。旧文章配图会从 `legacy-assets-a.zip`、`legacy-assets-b.zip` 和 `legacy-assets-c.zip` 在构建时展开。
 
 ## 发布到 GitHub Pages
 
