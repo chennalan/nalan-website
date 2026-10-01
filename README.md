@@ -29,11 +29,13 @@ npm run build
 
 3. 提交并推送到 `main` 分支。GitHub Actions 会自动更新网页。
 
+这里的“发布文章”是把 Markdown 文件提交到 GitHub；网站没有在线后台编辑器或登录账号。
+
 图片可放在文章自己的文件夹中，并在正文使用 Markdown 图片语法；首次使用时也可以把图片放进 `assets/`，在文章中引用对应地址。
 
 ## 发布到 GitHub Pages
 
-把本项目放进一个**新建的独立 GitHub 仓库**，默认分支使用 `main`。在仓库的 **Settings → Pages → Build and deployment** 中将来源设置为 **GitHub Actions**。之后每次推送到 `main` 都会自动部署。
+把本项目推送到一个**新建的独立 GitHub 仓库**，默认分支使用 `main`。在仓库的 **Settings → Pages → Build and deployment** 中将来源设置为 **GitHub Actions**。之后每次推送到 `main` 都会自动部署。
 
 项目名仓库会自动使用 `/仓库名/` 路径；如果仓库名是 `你的用户名.github.io`，GitHub Pages 会把它作为个人站点域名提供。
 
