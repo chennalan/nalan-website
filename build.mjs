@@ -196,7 +196,7 @@ await cpTree(path.join(root, 'assets', 'images'), path.join(out, 'assets', 'imag
 
 const postsDir = path.join(root, 'content', 'posts')
 const posts = []
-for (const file of (await readdir(postsDir)).filter((name) => name.endsWith('.md'))) {
+for (const file of (await readdir(postsDir)).filter((name) => name.endsWith('.md') && name !== 'hello-world.md')) {
   const meta = frontmatter(await readFile(path.join(postsDir, file), 'utf8'), file)
   posts.push({ ...meta, slug: path.basename(file, '.md') })
 }
