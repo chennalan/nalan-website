@@ -152,7 +152,7 @@ function shell(title, description, content, active = '', depth = 0) {
   const dock = [
     ['/', '首页', '⌂', 'home'], ['/blog/', '写作', '▤', 'writing'], ['/photos/', '照片', '▧', 'photos'], ['/projects/', '项目', '✎', 'projects'], ['/ama/', '咨询', '◷', 'ama'],
   ].map(([href, label, icon, key]) => `<a class="dock-link ${active === key ? 'active' : ''}" href="${absolute(href)}" aria-label="${label}" title="${label}">${key === 'home' ? `<img src="${absolute('/assets/images/avatar.png')}" alt="">` : icon}<span>${label}</span></a>`).join('')
-  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${escapeHtml(description)}"><title>${escapeHtml(title)} · 纳兰</title><link rel="stylesheet" href="${absolute('/assets/style.css')}"><script defer src="${absolute('/assets/site.js')}"></script></head><body data-home="${absolute('/')}" data-base="${base}"><main>${content}</main><nav class="dock" aria-label="主导航">${dock}<i class="dock-divider"></i><button class="dock-link theme-toggle" type="button" aria-label="切换主题" title="切换主题">◐<span>主题</span></button></nav><footer class="site-footer"><span>纳兰的个人主页</span><span><a href="${absolute('/blog/')}" >写作</a> · <a href="${absolute('/projects/')}">项目</a> · <a href="https://github.com/chennalan/nalan-website" target="_blank" rel="noreferrer">GitHub</a></span></footer></body></html>`
+  return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="${escapeHtml(description)}"><title>${escapeHtml(title)} · 纳兰</title><link rel="stylesheet" href="${absolute('/assets/style.css')}"><link rel="stylesheet" href="${absolute('/assets/shelves.css')}"><script defer src="${absolute('/assets/site.js')}"></script></head><body data-home="${absolute('/')}" data-base="${base}"><main>${content}</main><nav class="dock" aria-label="主导航">${dock}<i class="dock-divider"></i><button class="dock-link theme-toggle" type="button" aria-label="切换主题" title="切换主题">◐<span>主题</span></button></nav><footer class="site-footer"><span>纳兰的个人主页</span><span><a href="${absolute('/blog/')}" >写作</a> · <a href="${absolute('/projects/')}">项目</a> · <a href="https://github.com/chennalan/nalan-website" target="_blank" rel="noreferrer">GitHub</a></span></footer></body></html>`
 }
 
 async function cpTree(source, destination) {
@@ -192,6 +192,7 @@ await mkdir(path.join(out, 'assets', 'images'), { recursive: true })
 await mkdir(path.join(out, 'posts'), { recursive: true })
 await copyFile(path.join(root, 'assets', 'style.css'), path.join(out, 'assets', 'style.css'))
 await copyFile(path.join(root, 'assets', 'site.js'), path.join(out, 'assets', 'site.js'))
+await copyFile(path.join(root, 'assets', 'shelves.css'), path.join(out, 'assets', 'shelves.css'))
 await cpTree(path.join(root, 'assets', 'images'), path.join(out, 'assets', 'images'))
 
 const postsDir = path.join(root, 'content', 'posts')
