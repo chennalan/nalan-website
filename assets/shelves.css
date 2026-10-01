@@ -33,3 +33,11 @@
 [data-theme="dark"] .book-cover{border-color:#454239;background:#292823}
 @media(max-width:480px){.record-viewport{height:158px}.record-stack{inset:0 0 10px}.record-item{width:clamp(98px,31vw,124px)}.book-stage{height:202px}.book-frame{height:174px}.book-frame[data-active]{flex-basis:clamp(88px,27vw,112px)}.book-inner{width:clamp(88px,27vw,112px);height:172px}.book-spine-title{font-size:6px}.record-caption,.book-annotation{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.record-item,.record-card,.book-frame,.book-inner{transition:none!important;scroll-behavior:auto}}
+
+/* Keep inactive spine links inside their visible hit areas. */
+.book-inner{width:100%;height:100%;transform:none;transition:none;cursor:pointer}
+.book-cover{transform:translateZ(5px);opacity:0;transition:opacity .3s ease;pointer-events:none}
+.book-frame[data-active] .book-cover{opacity:1}
+.book-spine{top:0;right:0;bottom:0;left:0;width:auto;transform:none;transition:opacity .3s ease}
+.book-frame[data-active] .book-spine{opacity:0;pointer-events:none}
+@media(max-width:480px){.book-inner{width:100%;height:100%}}
