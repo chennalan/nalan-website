@@ -8,6 +8,52 @@ const out = path.join(root, 'dist')
 const base = (process.env.SITE_BASE_PATH || '').replace(/\/$/, '')
 const url = (value) => `${base}${value}`
 
+function formatHtml(markup) {
+  const blockTags = new Set(['html', 'head', 'body', 'header', 'nav', 'main', 'section', 'div', 'ul', 'li', 'footer'])
+  const inlineBlockTags = new Set(['title', 'p', 'h1', 'h2', 'script'])
+  const voidTags = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
+  const tokens = markup.match(/<!--[\s\S]*?-->|<![^>]*>|<\/?[^>]+>|[^<]+/g) || []
+  const lines = []
+  let depth = 0
+
+  for (const token of tokens) {
+    const tag = token.match(/^<(\/?)([a-z][\w:-]*)\b/i)
+    if (!tag) {
+      if (lines.length) lines[lines.length - 1] += token
+      else lines.push(token)
+      continue
+    }
+
+    const [, closing, rawName] = tag
+    const name = rawName.toLowerCase()
+    if (blockTags.has(name)) {
+      if (closing) {
+        depth = Math.max(0, depth - 1)
+        lines.push(`${'  '.repeat(depth)}${token}`)
+      } else {
+        lines.push(`${'  '.repeat(depth)}${token}`)
+        if (!voidTags.has(name) && !token.endsWith('/>')) depth += 1
+      }
+    } else if (inlineBlockTags.has(name)) {
+      if (closing) {
+        if (lines.length) lines[lines.length - 1] += token
+        depth = Math.max(0, depth - 1)
+      } else {
+        lines.push(`${'  '.repeat(depth)}${token}`)
+        if (!voidTags.has(name) && !token.endsWith('/>')) depth += 1
+      }
+    } else if (voidTags.has(name)) {
+      lines.push(`${'  '.repeat(depth)}${token}`)
+    } else if (lines.length) {
+      lines[lines.length - 1] += token
+    } else {
+      lines.push(token)
+    }
+  }
+
+  return `${lines.join('\n').trimStart()}\n`
+}
+
 function escapeHtml(value = '') {
   return String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&#39;')
 }
@@ -216,7 +262,7 @@ for (const post of posts) {
 }
 const homepageRows = posts.slice(0, 5).map((p) => postRow(p, 'short')).join('')
 const home = `<section class="home-wrap"><div class="intro-grid"><div class="intro-copy"><div class="identity"><h1>纳兰</h1><span class="pixel-mark" aria-hidden>✳</span></div><p>我是纳兰，一个极简的辩证主义者，也是一名全栈工程师。我也是 lastwar 指挥官，热爱把细节做到刚刚好。</p><p>我创办了<a href="https://zolplay.com" target="_blank" rel="noreferrer">佐玩</a>，一家打造产品、品牌与数字体验的 AI 原生设计工作室。</p><p>我兴趣很杂，什么都爱试试。和团队一起做东西，我在意好点子、好细节，也在意玩得开心。</p><p class="contact-line">可以在 <a href="https://github.com/chennalan" target="_blank" rel="noreferrer">GitHub</a> 找到我。</p></div><img class="portrait" src="${url('/assets/images/headshot.jpg')}" alt="纳兰的头像"></div><div class="nav-cards"><a class="nav-card" href="${url('/blog/')}"><span class="card-illustration papers"><i></i><i></i><i></i></span><strong>写作</strong><small>${posts.length} 篇文章</small></a><a class="nav-card" href="${url('/photos/')}"><span class="card-illustration photo-fan"><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-feeding.webp')}" alt=""><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-sleeping.webp')}" alt=""><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-hand.webp')}" alt=""></span><strong>照片</strong><small>生活与记录</small></a><a class="nav-card" href="${url('/projects/')}"><span class="card-illustration project-mark">✎</span><strong>项目</strong><small>${projects.length} 个项目</small></a></div><section class="home-section"><div class="section-head"><h2><span>01</span> 写作</h2><a href="${url('/blog/')}">查看全部 →</a></div><div class="post-list">${homepageRows}</div></section><section class="home-section"><div class="section-head"><h2><span>02</span> 循环播放中</h2></div><div class="collection-grid records-grid">${albums.map(([name, artist, image]) => `<a class="collection-item" href="https://music.apple.com/search?term=${encodeURIComponent(`${artist} ${name}`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/records/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(artist)}</small></a>`).join('')}</div></section><section class="home-section"><div class="section-head"><h2><span>03</span> 珍藏书架</h2></div><div class="collection-grid books-grid">${books.map(([name, author, image]) => `<a class="collection-item" href="https://www.google.com/search?q=${encodeURIComponent(`${name} ${author} book`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/books/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(author)}</small></a>`).join('')}</div></section></section>`
-await writeFile(path.join(out, 'index.html'), shell('首页', '纳兰的个人主页、项目和写作', home, 'home'))
+await writeFile(path.join(out, 'index.html'), formatHtml(shell('首页', '纳兰的个人主页、项目和写作', home, 'home')))
 
 const articleList = [...grouped].map(([year, yearPosts]) => `<section class="year-section"><h2><span>${year}</span><i aria-hidden>${year.slice(-2)}</i></h2><div class="post-list">${yearPosts.map((p) => postRow(p, 'month-day')).join('')}</div></section>`).join('')
 const blog = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">NOTES & STORIES</p><h1>写作</h1><p>关于设计、工程、产品，以及一路上在意的人和事。</p><span class="heading-mark">✳</span></header><div class="year-list">${articleList}</div></section>`
