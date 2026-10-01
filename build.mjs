@@ -241,6 +241,20 @@ await copyFile(path.join(root, 'assets', 'site.js'), path.join(out, 'assets', 's
 await copyFile(path.join(root, 'assets', 'shelves.css'), path.join(out, 'assets', 'shelves.css'))
 await cpTree(path.join(root, 'assets', 'images'), path.join(out, 'assets', 'images'))
 
+const photoDir = path.join(root, 'photo')
+await mkdir(photoDir, { recursive: true })
+const photoExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
+const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
+  .filter((entry) => entry.isFile() && photoExtensions.has(path.extname(entry.name).toLowerCase()))
+  .map((entry) => entry.name)
+  .sort((a, b) => a.localeCompare(b, 'zh-CN', { numeric: true, sensitivity: 'base' }))
+await mkdir(path.join(out, 'photo'), { recursive: true })
+for (const name of photoFiles) await copyFile(path.join(photoDir, name), path.join(out, 'photo', name))
+
+const photoCaption = (name) => path.basename(name, path.extname(name)).replace(/[-_]+/g, ' ').trim()
+const photoPreviewFiles = photoFiles.slice(0, 3).map((name) => url(`/photo/${encodeURIComponent(name)}`))
+const photoPreview = photoPreviewFiles.map((src) => `<img src="${src}" alt="">`).join('')
+
 const postsDir = path.join(root, 'content', 'posts')
 const posts = []
 for (const file of (await readdir(postsDir)).filter((name) => name.endsWith('.md') && name !== 'hello-world.md')) {
@@ -264,7 +278,7 @@ const homepageRows = posts.slice(0, 5).map((p) => postRow(p, 'short')).join('')
 const home = `<section class="home-wrap"><div class="intro-grid"><div class="intro-copy"><div class="identity"><h1>纳兰</h1><span class="pixel-mark" aria-hidden>✳</span></div><p>你好，这里是纳兰，一个极简的辩证主义者，也是一名全栈工程师。我也是 lastwar 指挥官，热爱把细节做到刚刚好。</p>
 <p>我也用 AI 辅助编程做一些小产品，把日常阅读和实践留下来。</p>
 <p>我兴趣很杂，什么都爱试试。和团队一起做东西，我在意好点子、好细节，也在意玩得开心。</p>
-<p class="contact-line">可以在 <a href="https://github.com/chennalan" target="_blank" rel="noreferrer">GitHub</a> 找到我。</p></div><img class="portrait" src="${url('/assets/images/headshot.jpg')}" alt="纳兰的头像"></div><div class="nav-cards"><a class="nav-card" href="${url('/blog/')}"><span class="card-illustration papers"><i></i><i></i><i></i></span><strong>写作</strong><small>${posts.length} 篇文章</small></a><a class="nav-card" href="${url('/photos/')}"><span class="card-illustration photo-fan"><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-feeding.webp')}" alt=""><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-sleeping.webp')}" alt=""><img src="${url('/posts/we-decided-to-stop-buying-saas/jensen-hand.webp')}" alt=""></span><strong>照片</strong><small>生活与记录</small></a><a class="nav-card" href="${url('/projects/')}"><span class="card-illustration project-mark">✎</span><strong>项目</strong><small>${projects.length} 个项目</small></a></div><section class="home-section"><div class="section-head"><h2><span>01</span> 写作</h2><a href="${url('/blog/')}">查看全部 →</a></div><div class="post-list">${homepageRows}</div></section><section class="home-section"><div class="section-head"><h2><span>02</span> 循环播放中</h2></div><div class="collection-grid records-grid">${albums.map(([name, artist, image]) => `<a class="collection-item" href="https://music.apple.com/search?term=${encodeURIComponent(`${artist} ${name}`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/records/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(artist)}</small></a>`).join('')}</div></section><section class="home-section"><div class="section-head"><h2><span>03</span> 珍藏书架</h2></div><div class="collection-grid books-grid">${books.map(([name, author, image]) => `<a class="collection-item" href="https://www.google.com/search?q=${encodeURIComponent(`${name} ${author} book`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/books/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(author)}</small></a>`).join('')}</div></section></section>`
+<p class="contact-line">可以在 <a href="https://github.com/chennalan" target="_blank" rel="noreferrer">GitHub</a> 找到我。</p></div><img class="portrait" src="${url('/assets/images/headshot.jpg')}" alt="纳兰的头像"></div><div class="nav-cards"><a class="nav-card" href="${url('/blog/')}"><span class="card-illustration papers"><i></i><i></i><i></i></span><strong>写作</strong><small>${posts.length} 篇文章</small></a><a class="nav-card" href="${url('/photos/')}"><span class="card-illustration photo-fan">${photoPreview}</span><strong>照片</strong><small>生活与记录</small></a><a class="nav-card" href="${url('/projects/')}"><span class="card-illustration project-mark">✎</span><strong>项目</strong><small>${projects.length} 个项目</small></a></div><section class="home-section"><div class="section-head"><h2><span>01</span> 写作</h2><a href="${url('/blog/')}">查看全部 →</a></div><div class="post-list">${homepageRows}</div></section><section class="home-section"><div class="section-head"><h2><span>02</span> 循环播放中</h2></div><div class="collection-grid records-grid">${albums.map(([name, artist, image]) => `<a class="collection-item" href="https://music.apple.com/search?term=${encodeURIComponent(`${artist} ${name}`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/records/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(artist)}</small></a>`).join('')}</div></section><section class="home-section"><div class="section-head"><h2><span>03</span> 珍藏书架</h2></div><div class="collection-grid books-grid">${books.map(([name, author, image]) => `<a class="collection-item" href="https://www.google.com/search?q=${encodeURIComponent(`${name} ${author} book`)}" target="_blank" rel="noreferrer"><img src="${url(`/assets/images/books/${image}`)}" alt="${escapeHtml(name)}"><span>${escapeHtml(name)}</span><small>${escapeHtml(author)}</small></a>`).join('')}</div></section></section>`
 await writeFile(path.join(out, 'index.html'), formatHtml(shell('首页', '纳兰的个人主页、项目和写作', home, 'home')))
 
 const articleList = [...grouped].map(([year, yearPosts]) => `<section class="year-section"><h2><span>${year}</span><i aria-hidden>${year.slice(-2)}</i></h2><div class="post-list">${yearPosts.map((p) => postRow(p, 'month-day')).join('')}</div></section>`).join('')
@@ -277,11 +291,12 @@ const projectPage = `<section class="page-wrap"><header class="page-heading"><p 
 await mkdir(path.join(out, 'projects'), { recursive: true })
 await writeFile(path.join(out, 'projects', 'index.html'), shell('项目', '纳兰做过的项目与小实验', projectPage, 'projects', 1))
 
-const familyPhotos = [
-  ['jensen-feeding.webp', 'Cali 抱着 Jensen 给他喂奶'], ['jensen-sleeping.webp', '刚出生不久熟睡的 Jensen'],
-  ['jensen-hand.webp', 'Jensen 靠在 Cali 身上伸出小手'], ['jensen-feet.webp', 'Jensen 的两只小脚'],
-]
-const photoTiles = familyPhotos.map(([name, caption]) => `<figure class="photo-tile"><img src="${url(`/posts/we-decided-to-stop-buying-saas/${name}`)}" alt="${escapeHtml(caption)}" loading="lazy"><figcaption>${escapeHtml(caption)}</figcaption></figure>`).join('')
+const photoTiles = photoFiles.length
+  ? photoFiles.map((name) => {
+      const caption = photoCaption(name)
+      return `<figure class="photo-tile"><img src="${url(`/photo/${encodeURIComponent(name)}`)}" alt="${escapeHtml(caption)}" loading="lazy"><figcaption>${escapeHtml(caption)}</figcaption></figure>`
+    }).join('')
+  : '<p class="photo-empty">还没有照片。</p>'
 const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>工作、生活和旅途中留下的一些瞬间。</p></header><div class="photo-grid">${photoTiles}</div></section>`
 await mkdir(path.join(out, 'photos'), { recursive: true })
 await writeFile(path.join(out, 'photos', 'index.html'), shell('照片', '生活与记录', photos, 'photos', 1))
