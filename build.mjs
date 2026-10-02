@@ -271,7 +271,7 @@ for (const entry of postEntries) {
     } catch (error) {
       if (error.code !== 'ENOENT') throw error
     }
-  } else if (entry.isFile() && entry.name.endsWith('.md') && entry.name !== 'hello-world.md') {
+  } else if (entry.isFile() && entry.name.endsWith('.md') && !['hello-world.md', 'README.md'].includes(entry.name)) {
     // 兼容旧文章：content/posts/2026-09-30.md
     const meta = frontmatter(await readFile(path.join(postsDir, entry.name), 'utf8'), entry.name)
     posts.push({ ...meta, slug: meta.slug || path.basename(entry.name, '.md'), sourceDir: null })
