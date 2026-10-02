@@ -334,5 +334,17 @@ for (let index = 0; index < posts.length; index += 1) {
   await writeFile(path.join(out, 'posts', post.slug, 'index.html'), shell(post.title, post.description || post.title, content, 'writing', 2))
 }
 
+// Generate RSS and sitemap from the same article index used by the site.
+const rssItems = posts.map((post) => {
+  const link = absoluteUrl(`/posts/${post.slug}/`)
+  return `<item><title>${escapeHtml(post.title)}</title><link>${escapeHtml(link)}</link><guid isPermaLink="true">${escapeHtml(link)}</guid><pubDate>${new Date(post.date + 'T00:00:00Z').toUTCString()}</pubDate><description>${escapeHtml(post.description || post.title)}</description></item>`
+}).join('')
+const rss = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>纳兰 · 写作</title><link>${escapeHtml(absoluteUrl('/blog/'))}</link><description>纳兰的个人写作</description><language>zh-CN</language>${rssItems}</channel></rss>`
+await writeFile(path.join(out, 'feed.xml'), rss)
+
+const sitemapPaths = ['/', '/blog/', '/projects/', '/photos/', '/ama/', ...posts.map((post) => `/posts/${post.slug}/`)]
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemapPaths.map((p) => `<url><loc>${escapeHtml(absoluteUrl(p))}</loc></url>`).join('')}</urlset>`
+await writeFile(path.join(out, 'sitemap.xml'), sitemap)
+
 await writeFile(path.join(out, '.nojekyll'), '')
 console.log(`Built home, ${posts.length} articles, projects, photos, and contact pages in dist/`)
