@@ -257,15 +257,31 @@ const photoPreview = photoPreviewFiles.map((src) => `<img src="${src}" alt="">`)
 
 const postsDir = path.join(root, 'content', 'posts')
 const posts = []
-for (const file of (await readdir(postsDir)).filter((name) => name.endsWith('.md') && name !== 'hello-world.md')) {
-  const meta = frontmatter(await readFile(path.join(postsDir, file), 'utf8'), file)
-  posts.push({ ...meta, slug: path.basename(file, '.md') })
+const postEntries = await readdir(postsDir, { withFileTypes: true })
+
+// 新写法：一篇文章一个文件夹，入口统一为 index.md。
+// 例如：content/posts/jk03/index.md
+// 图片、附件等直接放在同一个文件夹里，发布时会自动跟随文章复制。
+for (const entry of postEntries) {
+  if (entry.isDirectory()) {
+    const indexPath = path.join(postsDir, entry.name, 'index.md')
+    try {
+      const meta = frontmatter(await readFile(indexPath, 'utf8'), indexPath)
+      posts.push({ ...meta, slug: meta.slug || entry.name, sourceDir: path.join(postsDir, entry.name) })
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error
+    }
+  } else if (entry.isFile() && entry.name.endsWith('.md') && entry.name !== 'hello-world.md') {
+    // 兼容旧文章：content/posts/2026-09-30.md
+    const meta = frontmatter(await readFile(path.join(postsDir, entry.name), 'utf8'), entry.name)
+    posts.push({ ...meta, slug: meta.slug || path.basename(entry.name, '.md'), sourceDir: null })
+  }
 }
 posts.sort((a, b) => b.date.localeCompare(a.date))
 for (const post of posts) {
   const dest = path.join(out, 'posts', post.slug)
   await mkdir(dest, { recursive: true })
-  await cpTree(path.join(postsDir, post.slug), dest)
+  if (post.sourceDir) await cpTree(post.sourceDir, dest)
 }
 
 const grouped = new Map()
