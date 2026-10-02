@@ -450,11 +450,14 @@ const projectPage = `<section class="page-wrap"><header class="page-heading"><p 
 await mkdir(path.join(out, 'projects'), { recursive: true })
 await writeFile(path.join(out, 'projects', 'index.html'), shell('项目', '纳兰做过的项目与小实验', projectPage, 'projects', 1))
 
+const photoDetailDirName = (name) => encodeURIComponent(name)
+const photoDetailHref = (name) => url(`/photos/${photoDetailDirName(name)}/`)
 const photoTiles = photoItems.length
   ? photoItems.map((item, index) => {
       const src = url(`/photo/${encodeURIComponent(item.name)}`)
       const meta = [item.date, item.location].filter(Boolean).join(' · ')
-      return `<figure class="photo-tile" data-photo-index="${index}" data-year="${escapeHtml((item.date || '').slice(0, 4))}" data-month="${escapeHtml((item.date || '').slice(0, 7))}" tabindex="0" role="button" aria-label="查看照片：${escapeHtml(item.caption)}"><img src="${src}" alt="${escapeHtml(item.caption)}" loading="lazy"><figcaption><strong>${escapeHtml(item.caption)}</strong>${meta ? `<span>${escapeHtml(meta)}</span>` : ''}${item.description ? `<small>${escapeHtml(item.description)}</small>` : ''}</figcaption></figure>`
+      const detail = photoDetailHref(item.name)
+      return `<figure class="photo-tile" data-photo-index="${index}" data-year="${escapeHtml((item.date || '').slice(0, 4))}" data-month="${escapeHtml((item.date || '').slice(0, 7))}" tabindex="0" role="button" aria-label="查看照片：${escapeHtml(item.caption)}"><img src="${src}" alt="${escapeHtml(item.caption)}" loading="lazy"><figcaption><strong>${escapeHtml(item.caption)}</strong>${meta ? `<span>${escapeHtml(meta)}</span>` : ''}${item.description ? `<small>${escapeHtml(item.description)}</small>` : ''}<a class="photo-detail-link" href="${detail}" tabindex="-1">查看详情 →</a></figcaption></figure>`
     }).join('')
   : '<p class="photo-empty">还没有照片。把照片上传到 photo/ 文件夹，推送后网站会自动生成照片库。</p>'
 const years = [...new Set(photoItems.map((item) => (item.date || '').slice(0, 4)).filter(Boolean))].sort((a, b) => b.localeCompare(a))
@@ -464,6 +467,26 @@ const monthOptions = months.map((month) => `<option value="${month}">${month.rep
 const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>你的个人照片库：上传照片即可自动整理、筛选和浏览。</p></header><div class="photo-toolbar"><span data-photo-count>${photoItems.length} 张照片</span><span>点击查看大图 · ← → 切换</span></div><div class="photo-filters"><label>年份<select data-photo-year><option value="">全部年份</option>${yearOptions}</select></label><label>月份<select data-photo-month><option value="">全部月份</option>${monthOptions}</select></label><button type="button" data-photo-reset>重置</button></div><div class="photo-grid" data-photo-grid>${photoTiles}</div><nav class="photo-pagination" data-photo-pagination aria-label="照片分页"></nav></section>`
 await mkdir(path.join(out, 'photos'), { recursive: true })
 await writeFile(path.join(out, 'photos', 'index.html'), shell('照片', '生活与记录', photos, 'photos', 1))
+
+if (photoItems.length) {
+  for (let index = 0; index < photoItems.length; index += 1) {
+    const item = photoItems[index]
+    const src = url(`/photo/${encodeURIComponent(item.name)}`)
+    const previous = photoItems[index - 1]
+    const next = photoItems[index + 1]
+    const metaRows = [
+      ['日期', item.date || '未记录'],
+      ['地点', item.location || '未记录'],
+      ['文件名', item.name],
+    ]
+    const details = metaRows.map(([label, value]) => `<div class="photo-detail-row"><dt>${escapeHtml(label)}</dt><dd>${escapeHtml(value)}</dd></div>`).join('')
+    const navigation = `<nav class="photo-detail-nav" aria-label="照片导航">${previous ? `<a href="${photoDetailHref(previous.name)}">← 上一张</a>` : '<span></span>'}<a href="${url('/photos/')}">返回照片库</a>${next ? `<a href="${photoDetailHref(next.name)}">下一张 →</a>` : '<span></span>'}</nav>`
+    const detailPage = `<article class="photo-detail-page"><header class="photo-detail-head"><a class="photo-detail-back" href="${url('/photos/')}">← 照片</a><span>${index + 1} / ${photoItems.length}</span></header><figure class="photo-detail-hero"><img src="${src}" alt="${escapeHtml(item.caption)}"><figcaption><p class="eyebrow">PHOTO ${String(index + 1).padStart(2, '0')}</p><h1>${escapeHtml(item.caption)}</h1>${item.description ? `<p class="photo-detail-description">${escapeHtml(item.description)}</p>` : ''}</figcaption></figure><dl class="photo-detail-meta">${details}</dl>${navigation}</article>`
+    const detailDir = path.join(out, 'photos', photoDetailDirName(item.name))
+    await mkdir(detailDir, { recursive: true })
+    await writeFile(path.join(detailDir, 'index.html'), shell(item.caption, item.description || '照片详情', detailPage, 'photos', 2))
+  }
+}
 
 const ama = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LET’S TALK</p><h1>聊聊</h1><p>产品设计、工程、职业选择，或任何你正在探索的想法。</p></header><div class="ama-card"><p>我喜欢和团队一起把好点子做出来，也愿意交流过程中的判断与细节。</p><a class="button" href="https://github.com/chennalan" target="_blank" rel="noreferrer">在 GitHub 找到我 ↗</a></div></section>`
 await mkdir(path.join(out, 'ama'), { recursive: true })
