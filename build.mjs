@@ -352,7 +352,6 @@ await writeFile(path.join(out, 'photo', 'manifest.json'), JSON.stringify(photoIt
 
 const photoPreviewFiles = photoItems.slice(0, 3).map((item) => url(`/photo/${encodeURIComponent(item.name)}`))
 const photoPreview = photoPreviewFiles.map((src) => `<img src="${src}" alt="">`).join('')
-const photoFiles = photoItems.map((item) => item.name)
 
 const postsDir = path.join(root, 'content', 'posts')
 const posts = []
