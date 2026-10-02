@@ -265,7 +265,7 @@ await mkdir(photoDir, { recursive: true })
 const photoExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
 
 function parsePhotoDateFromName(name) {
-  const match = name.match(/(20\\d{2})[-_.](\\d{1,2})[-_.](\\d{1,2})/)
+  const match = name.match(/(20\d{2})[-_.](\d{1,2})[-_.](\d{1,2})/)
   if (!match) return ''
   const [, y, m, d] = match
   return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
@@ -279,7 +279,7 @@ function parseJpegExifDate(buffer) {
     const marker = buffer[offset + 1]
     if (marker === 0xda || marker === 0xd9) break
     const size = buffer.readUInt16BE(offset + 2)
-    if (marker === 0xe1 && buffer.toString('ascii', offset + 4, offset + 10) === 'Exif\\0\\0') {
+    if (marker === 0xe1 && buffer.toString('ascii', offset + 4, offset + 10) === 'Exif\0\0') {
       const tiff = offset + 10
       const little = buffer.toString('ascii', tiff, tiff + 2) === 'II'
       const u16 = (p) => little ? buffer.readUInt16LE(p) : buffer.readUInt16BE(p)
@@ -297,8 +297,8 @@ function parseJpegExifDate(buffer) {
           const bytes = (typeSize[type] || 0) * countValue
           const valueOffset = bytes <= 4 ? entry + 8 : tiff + u32(entry + 8)
           if (tag === 0x9003 || tag === 0x0132) {
-            const raw = buffer.toString('ascii', valueOffset, Math.min(valueOffset + countValue, buffer.length)).replace(/\\0.*$/, '').trim()
-            const m = raw.match(/^(\\d{4}):(\\d{2}):(\\d{2})/)
+            const raw = buffer.toString('ascii', valueOffset, Math.min(valueOffset + countValue, buffer.length)).replace(/\0.*$/, '').trim()
+            const m = raw.match(/^(\d{4}):(\d{2}):(\d{2})/)
             if (m) return `${m[1]}-${m[2]}-${m[3]}`
           }
         }
@@ -328,12 +328,21 @@ async function photoDate(name) {
 const photoCaption = (name) => {
   const baseName = path.basename(name, path.extname(name))
   const cleaned = baseName
-    .replace(/^20\\d{2}[-_.]\\d{1,2}[-_.]\\d{1,2}[-_\\s]*/, '')
+    .replace(/^20\d{2}[-_.]\d{1,2}[-_.]\d{1,2}[-_\s]*/, '')
     .replace(/^IMG[_-]?/i, '')
     .replace(/[-_]+/g, ' ')
     .trim()
-  return cleaned || '生活记录'
+  if (!cleaned || cleaned.length > 48 || /tplv|aweme|images-v2/i.test(cleaned)) return '生活记录'
+  return cleaned
 }
+
+const photoMetaPath = path.join(photoDir, 'meta.json')
+let photoMeta = {}
+try { photoMeta = JSON.parse(await readFile(photoMetaPath, 'utf8')) } catch {}
+const photoTitle = (name) => photoMeta[name]?.title?.trim() || photoCaption(name)
+const photoDescription = (name) => photoMeta[name]?.description?.trim() || ''
+const photoLocation = (name) => photoMeta[name]?.location?.trim() || ''
+const photoDateOverride = (name) => photoMeta[name]?.date?.trim() || ''
 
 const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
   .filter((entry) => entry.isFile() && photoExtensions.has(path.extname(entry.name).toLowerCase()))
@@ -341,8 +350,8 @@ const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
 
 const photoItems = []
 for (const name of photoFiles) {
-  const date = await photoDate(name)
-  photoItems.push({ name, date, caption: photoCaption(name) })
+  const date = photoDateOverride(name) || await photoDate(name)
+  photoItems.push({ name, date, caption: photoTitle(name), description: photoDescription(name), location: photoLocation(name) })
 }
 photoItems.sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.name.localeCompare(b.name, 'zh-CN', { numeric: true, sensitivity: 'base' }))
 
@@ -444,12 +453,15 @@ await writeFile(path.join(out, 'projects', 'index.html'), shell('项目', '纳�
 const photoTiles = photoItems.length
   ? photoItems.map((item, index) => {
       const src = url(`/photo/${encodeURIComponent(item.name)}`)
-      const date = item.date || ''
-      const meta = date ? `${date}${item.caption ? ' · ' : ''}${item.caption}` : item.caption
-      return `<figure class="photo-tile" data-photo-index="${index}" tabindex="0" role="button" aria-label="查看照片：${escapeHtml(item.caption)}"><img src="${src}" alt="${escapeHtml(item.caption)}" loading="lazy"><figcaption><strong>${escapeHtml(item.caption)}</strong>${date ? `<time datetime="${date}">${date}</time>` : ''}</figcaption></figure>`
+      const meta = [item.date, item.location].filter(Boolean).join(' · ')
+      return `<figure class="photo-tile" data-photo-index="${index}" data-year="${escapeHtml((item.date || '').slice(0, 4))}" data-month="${escapeHtml((item.date || '').slice(0, 7))}" tabindex="0" role="button" aria-label="查看照片：${escapeHtml(item.caption)}"><img src="${src}" alt="${escapeHtml(item.caption)}" loading="lazy"><figcaption><strong>${escapeHtml(item.caption)}</strong>${meta ? `<span>${escapeHtml(meta)}</span>` : ''}${item.description ? `<small>${escapeHtml(item.description)}</small>` : ''}</figcaption></figure>`
     }).join('')
-  : '<p class="photo-empty">还没有照片。把照片上传到 photo/ 文件夹，推送后网站会自动生成照片墙。</p>'
-const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>把照片上传到 <code>photo/</code>，网站会自动读取照片、日期和描述，并生成照片墙。</p></header><div class="photo-toolbar"><span>${photoItems.length} 张照片</span><span>点击照片查看大图 · 每页 18 张</span></div><div class="photo-grid" data-photo-grid>${photoTiles}</div><nav class="photo-pagination" data-photo-pagination aria-label="照片分页"></nav></section>`
+  : '<p class="photo-empty">还没有照片。把照片上传到 photo/ 文件夹，推送后网站会自动生成照片库。</p>'
+const years = [...new Set(photoItems.map((item) => (item.date || '').slice(0, 4)).filter(Boolean))].sort((a, b) => b.localeCompare(a))
+const months = [...new Set(photoItems.map((item) => (item.date || '').slice(0, 7)).filter(Boolean))].sort((a, b) => b.localeCompare(a))
+const yearOptions = years.map((year) => `<option value="${year}">${year} 年</option>`).join('')
+const monthOptions = months.map((month) => `<option value="${month}">${month.replace('-', ' 年 ')} 月</option>`).join('')
+const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>你的个人照片库：上传照片即可自动整理、筛选和浏览。</p></header><div class="photo-toolbar"><span data-photo-count>${photoItems.length} 张照片</span><span>点击查看大图 · ← → 切换</span></div><div class="photo-filters"><label>年份<select data-photo-year><option value="">全部年份</option>${yearOptions}</select></label><label>月份<select data-photo-month><option value="">全部月份</option>${monthOptions}</select></label><button type="button" data-photo-reset>重置</button></div><div class="photo-grid" data-photo-grid>${photoTiles}</div><nav class="photo-pagination" data-photo-pagination aria-label="照片分页"></nav></section>`
 await mkdir(path.join(out, 'photos'), { recursive: true })
 await writeFile(path.join(out, 'photos', 'index.html'), shell('照片', '生活与记录', photos, 'photos', 1))
 
