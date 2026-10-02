@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url'
 const root = path.dirname(fileURLToPath(import.meta.url))
 const out = path.join(root, 'dist')
 const base = process.env.SITE_BASE_PATH || ''
-const siteUrl = (process.env.SITE_URL || 'https://chennalan.github.io/nalan-website').replace(/\/$/, '')
+const siteUrl = (process.env.SITE_URL || 'https://chennalan.cn').replace(/\/$/, '')
 const url = (value) => `${base}${value}`
 const absoluteUrl = (value) => `${siteUrl}${base}${value}`
 
