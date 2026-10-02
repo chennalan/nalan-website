@@ -5,8 +5,10 @@ import { fileURLToPath } from 'node:url'
 
 const root = path.dirname(fileURLToPath(import.meta.url))
 const out = path.join(root, 'dist')
-const base = ''
+const base = process.env.SITE_BASE_PATH || ''
+const siteUrl = (process.env.SITE_URL || 'https://chennalan.github.io/nalan-website').replace(/\/$/, '')
 const url = (value) => `${base}${value}`
+const absoluteUrl = (value) => `${siteUrl}${base}${value}`
 
 function formatHtml(markup) {
   const blockTags = new Set(['html', 'head', 'body', 'header', 'nav', 'main', 'section', 'div', 'ul', 'li', 'footer'])
@@ -94,6 +96,12 @@ function inline(text) {
 
 function renderMarkdown(source) {
   const body = source
+    // 简化配图：@img(photo.jpg) 或 @img(photo.jpg | 图片说明)
+    .replace(/@img\\(([^)|]+?)(?:\\|([^)]*))?\\)/g, (_, src, caption = '') => {
+      const file = src.trim()
+      const alt = (caption.trim() || path.basename(file, path.extname(file))).trim()
+      return `![${alt}](./${file})`
+    })
     .replace(/<PhotoStack(?:Frames)?\s*>|<\/PhotoStack(?:Frames)?\s*>/g, '')
     .replace(/<PhotoStackCaption>([\s\S]*?)<\/PhotoStackCaption>/g, '\n> $1\n')
     .replace(/<Tweet id="(\d+)"\s*\/>/g, '[查看这条 X 帖子](https://x.com/i/status/$1)')
