@@ -197,6 +197,31 @@
 
   enhancePhotos()
 
+  // Photo library filters
+  const photoGrid = document.querySelector('[data-photo-grid]')
+  if (photoGrid) {
+    const tiles = [...photoGrid.querySelectorAll('.photo-tile')]
+    const year = document.querySelector('[data-photo-year]')
+    const month = document.querySelector('[data-photo-month]')
+    const count = document.querySelector('[data-photo-count]')
+    const reset = document.querySelector('[data-photo-reset]')
+    const applyPhotoFilter = () => {
+      const y = year?.value || ''
+      const m = month?.value || ''
+      const visible = tiles.filter(tile => (!y || tile.dataset.year === y) && (!m || tile.dataset.month === m))
+      tiles.forEach(tile => { tile.hidden = true })
+      visible.forEach(tile => { tile.hidden = false })
+      if (count) count.textContent = visible.length + ' 张照片'
+    }
+    year?.addEventListener('change', applyPhotoFilter)
+    month?.addEventListener('change', applyPhotoFilter)
+    reset?.addEventListener('click', () => {
+      if (year) year.value = ''
+      if (month) month.value = ''
+      applyPhotoFilter()
+    })
+  }
+
   function enhanceRecords(grid) {
     const cards = [...grid.querySelectorAll(':scope > .collection-item')]
     if (!cards.length) return
