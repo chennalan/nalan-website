@@ -328,12 +328,21 @@ async function photoDate(name) {
 const photoCaption = (name) => {
   const baseName = path.basename(name, path.extname(name))
   const cleaned = baseName
-    .replace(/^20\\d{2}[-_.]\\d{1,2}[-_.]\\d{1,2}[-_\\s]*/, '')
+    .replace(/^20\d{2}[-_.]\d{1,2}[-_.]\d{1,2}[-_\s]*/, '')
     .replace(/^IMG[_-]?/i, '')
     .replace(/[-_]+/g, ' ')
     .trim()
-  return cleaned || '生活记录'
+  if (!cleaned || cleaned.length > 48 || /tplv|aweme|images-v2/i.test(cleaned)) return '生活记录'
+  return cleaned
 }
+
+const photoMetaPath = path.join(photoDir, 'meta.json')
+let photoMeta = {}
+try { photoMeta = JSON.parse(await readFile(photoMetaPath, 'utf8')) } catch {}
+const photoTitle = (name) => photoMeta[name]?.title?.trim() || photoCaption(name)
+const photoDescription = (name) => photoMeta[name]?.description?.trim() || ''
+const photoLocation = (name) => photoMeta[name]?.location?.trim() || ''
+const photoDateOverride = (name) => photoMeta[name]?.date?.trim() || ''
 
 const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
   .filter((entry) => entry.isFile() && photoExtensions.has(path.extname(entry.name).toLowerCase()))
@@ -341,8 +350,8 @@ const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
 
 const photoItems = []
 for (const name of photoFiles) {
-  const date = await photoDate(name)
-  photoItems.push({ name, date, caption: photoCaption(name) })
+  const date = photoDateOverride(name) || await photoDate(name)
+  photoItems.push({ name, date, caption: photoTitle(name), description: photoDescription(name), location: photoLocation(name) })
 }
 photoItems.sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.name.localeCompare(b.name, 'zh-CN', { numeric: true, sensitivity: 'base' }))
 
