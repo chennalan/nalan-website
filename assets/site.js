@@ -119,6 +119,84 @@
     return node
   }
 
+  function enhancePhotos() {
+    const grid = document.querySelector('[data-photo-grid]')
+    if (!grid) return
+    const tiles = [...grid.querySelectorAll('.photo-tile')]
+    const pagination = document.querySelector('[data-photo-pagination]')
+    const pageSize = 18
+    let page = 1
+    let active = -1
+
+    const overlay = makeElement('div', 'photo-lightbox')
+    overlay.setAttribute('aria-hidden', 'true')
+    overlay.innerHTML = `
+      <button class="photo-lightbox-close" type="button" aria-label="关闭">×</button>
+      <button class="photo-lightbox-prev" type="button" aria-label="上一张">‹</button>
+      <figure><img alt=""><figcaption><strong></strong><time></time></figcaption></figure>
+      <button class="photo-lightbox-next" type="button" aria-label="下一张">›</button>
+    `
+    document.body.append(overlay)
+    const image = overlay.querySelector('img')
+    const caption = overlay.querySelector('figcaption strong')
+    const date = overlay.querySelector('figcaption time')
+
+    const showPage = (next) => {
+      const totalPages = Math.max(1, Math.ceil(tiles.length / pageSize))
+      page = Math.max(1, Math.min(totalPages, next))
+      tiles.forEach((tile, index) => { tile.hidden = index < (page - 1) * pageSize || index >= page * pageSize })
+      if (pagination) {
+        pagination.innerHTML = ''
+        for (let i = 1; i <= totalPages; i += 1) {
+          const button = makeElement('button', i === page ? 'selected' : '', String(i))
+          button.type = 'button'
+          button.setAttribute('aria-label', `第 ${i} 页`)
+          button.setAttribute('aria-current', i === page ? 'page' : 'false')
+          button.addEventListener('click', () => showPage(i))
+          pagination.append(button)
+        }
+      }
+    }
+
+    const open = (index) => {
+      active = Math.max(0, Math.min(tiles.length - 1, index))
+      const tile = tiles[active]
+      const img = tile.querySelector('img')
+      const time = tile.querySelector('time')
+      image.src = img.currentSrc || img.src
+      image.alt = img.alt
+      caption.textContent = tile.querySelector('figcaption strong')?.textContent || img.alt
+      date.textContent = time?.textContent || ''
+      overlay.setAttribute('aria-hidden', 'false')
+      document.body.classList.add('photo-lightbox-open')
+    }
+    const close = () => {
+      overlay.setAttribute('aria-hidden', 'true')
+      document.body.classList.remove('photo-lightbox-open')
+    }
+    const move = (delta) => open((active + delta + tiles.length) % tiles.length)
+
+    tiles.forEach((tile, index) => {
+      tile.addEventListener('click', () => open(index))
+      tile.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(index) }
+      })
+    })
+    overlay.querySelector('.photo-lightbox-close').addEventListener('click', close)
+    overlay.querySelector('.photo-lightbox-prev').addEventListener('click', () => move(-1))
+    overlay.querySelector('.photo-lightbox-next').addEventListener('click', () => move(1))
+    overlay.addEventListener('click', (event) => { if (event.target === overlay) close() })
+    document.addEventListener('keydown', (event) => {
+      if (overlay.getAttribute('aria-hidden') === 'true') return
+      if (event.key === 'Escape') close()
+      if (event.key === 'ArrowLeft') move(-1)
+      if (event.key === 'ArrowRight') move(1)
+    })
+    showPage(1)
+  }
+
+  enhancePhotos()
+
   function enhanceRecords(grid) {
     const cards = [...grid.querySelectorAll(':scope > .collection-item')]
     if (!cards.length) return
