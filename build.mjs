@@ -97,7 +97,7 @@ function inline(text) {
 function renderMarkdown(source) {
   const body = source
     // 简化配图：@img(photo.jpg) 或 @img(photo.jpg | 图片说明)
-    .replace(/@img\\(([^)|]+?)(?:\\|([^)]*))?\\)/g, (_, src, caption = '') => {
+    .replace(/@img\(([^)|]+?)(?:\|([^)]*))?\)/g, (_, src, caption = '') => {
       const file = src.trim()
       const alt = (caption.trim() || path.basename(file, path.extname(file))).trim()
       return `![${alt}](./${file})`
