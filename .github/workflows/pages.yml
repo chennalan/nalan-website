@@ -26,7 +26,8 @@ jobs:
       - name: Build static website
         run: npm run build
         env:
-          SITE_BASE_PATH: ${{ github.event.repository.name != format('{0}.github.io', github.repository_owner) && format('/{0}', github.event.repository.name) || '/' }}
+          SITE_BASE_PATH: ''
+          SITE_URL: https://chennalan.cn
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
