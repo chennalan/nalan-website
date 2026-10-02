@@ -1,13 +1,81 @@
 (() => {
   const root = document.documentElement
-  const savedTheme = localStorage.getItem('nalan-theme')
-  if (savedTheme === 'dark') root.dataset.theme = 'dark'
-  document.querySelector('.theme-toggle')?.addEventListener('click', () => {
-    const dark = root.dataset.theme !== 'dark'
+  const prefsKey = 'nalan-preferences'
+  const defaults = { theme: 'system', fontSize: 14, width: 'standard', smooth: true, motion: true }
+  let preferences = { ...defaults }
+  try {
+    preferences = { ...defaults, ...(JSON.parse(localStorage.getItem(prefsKey) || '{}')) }
+  } catch {}
+
+  const systemDark = matchMedia('(prefers-color-scheme: dark)')
+  const applyPreferences = () => {
+    const dark = preferences.theme === 'dark' || (preferences.theme === 'system' && systemDark.matches)
     if (dark) root.dataset.theme = 'dark'
     else delete root.dataset.theme
-    localStorage.setItem('nalan-theme', dark ? 'dark' : 'light')
+    root.dataset.contentWidth = preferences.width
+    root.style.setProperty('--reading-font-size', `${preferences.fontSize}px`)
+    root.dataset.motion = preferences.motion ? 'on' : 'off'
+    root.dataset.smooth = preferences.smooth ? 'on' : 'off'
+    try { localStorage.setItem(prefsKey, JSON.stringify(preferences)) } catch {}
+    syncPreferenceControls()
+  }
+
+  const syncPreferenceControls = () => {
+    document.querySelectorAll('[data-theme-choice]').forEach((button) => {
+      button.classList.toggle('selected', button.dataset.themeChoice === preferences.theme)
+      button.setAttribute('aria-pressed', String(button.dataset.themeChoice === preferences.theme))
+    })
+    document.querySelectorAll('[data-width-choice]').forEach((button) => {
+      button.classList.toggle('selected', button.dataset.widthChoice === preferences.width)
+      button.setAttribute('aria-pressed', String(button.dataset.widthChoice === preferences.width))
+    })
+    const range = document.querySelector('[data-font-size]')
+    if (range) range.value = String(preferences.fontSize)
+    document.querySelector('[data-preference="smooth"]')?.toggleAttribute('checked', preferences.smooth)
+    document.querySelector('[data-preference="motion"]')?.toggleAttribute('checked', preferences.motion)
+  }
+
+  const preferencesPanel = document.querySelector('[data-preferences-panel]')
+  const openPreferences = () => {
+    if (!preferencesPanel) return
+    preferencesPanel.setAttribute('aria-hidden', 'false')
+    document.querySelector('.preferences-toggle')?.setAttribute('aria-expanded', 'true')
+    document.body.classList.add('preferences-open')
+    syncPreferenceControls()
+  }
+  const closePreferences = () => {
+    if (!preferencesPanel) return
+    preferencesPanel.setAttribute('aria-hidden', 'true')
+    document.querySelector('.preferences-toggle')?.setAttribute('aria-expanded', 'false')
+    document.body.classList.remove('preferences-open')
+  }
+  document.querySelector('.preferences-toggle')?.addEventListener('click', openPreferences)
+  document.querySelectorAll('[data-preferences-close]').forEach((node) => node.addEventListener('click', closePreferences))
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closePreferences()
   })
+  document.querySelectorAll('[data-theme-choice]').forEach((button) => {
+    button.addEventListener('click', () => { preferences.theme = button.dataset.themeChoice; applyPreferences() })
+  })
+  document.querySelectorAll('[data-width-choice]').forEach((button) => {
+    button.addEventListener('click', () => { preferences.width = button.dataset.widthChoice; applyPreferences() })
+  })
+  document.querySelector('[data-font-size]')?.addEventListener('input', (event) => {
+    preferences.fontSize = Number(event.target.value)
+    applyPreferences()
+  })
+  document.querySelector('[data-preference="smooth"]')?.addEventListener('change', (event) => {
+    preferences.smooth = event.target.checked
+    applyPreferences()
+  })
+  document.querySelector('[data-preference="motion"]')?.addEventListener('change', (event) => {
+    preferences.motion = event.target.checked
+    applyPreferences()
+  })
+  systemDark.addEventListener('change', () => {
+    if (preferences.theme === 'system') applyPreferences()
+  })
+  applyPreferences()
 
   const progress = document.querySelector('[data-reading-progress]')
   if (progress) {
