@@ -83,8 +83,6 @@
     const article = document.querySelector('.article-column')
     const headings = [...document.querySelectorAll('.prose h2[id],.prose h3[id],.prose h4[id]')]
     const links = [...document.querySelectorAll('[data-toc-link]')]
-    const tocToggle = document.querySelector('[data-toc-toggle]')
-    const map = document.querySelector('.reading-map')
 
     const update = () => {
       if (!article) return
@@ -93,22 +91,21 @@
       const amount = endY > startY ? Math.min(100, Math.max(0, (scrollY - startY) / (endY - startY) * 100)) : 100
       progress.style.width = `${amount}%`
       if (label) label.textContent = `${Math.round(amount)}%`
-      let current = -1
-      headings.forEach((heading, i) => { if (heading.getBoundingClientRect().top <= 150) current = i })
+
+      let current = 0
+      headings.forEach((heading, i) => {
+        if (heading.getBoundingClientRect().top <= 150) current = i + 1
+      })
       links.forEach((link, i) => link.classList.toggle('active', i === current))
     }
 
     addEventListener('scroll', update, { passive: true })
     addEventListener('resize', update)
     update()
-    document.querySelectorAll('[data-top]').forEach((button) => button.addEventListener('click', () => scrollTo({ top: 0, behavior: 'smooth' })))
-    tocToggle?.addEventListener('click', () => {
-      const open = map?.classList.toggle('is-open') ?? false
-      tocToggle.setAttribute('aria-expanded', String(open))
-    })
-    map?.querySelectorAll('nav a').forEach((link) => link.addEventListener('click', () => {
-      map.classList.remove('is-open')
-      tocToggle?.setAttribute('aria-expanded', 'false')
+    document.querySelectorAll('[data-top]').forEach((button) => button.addEventListener('click', () => scrollTo({ top: 0, behavior: preferences.smooth ? 'smooth' : 'auto' })))
+    document.querySelectorAll('[data-toc-link]').forEach((link) => link.addEventListener('click', () => {
+      document.querySelectorAll('[data-toc-link]').forEach((item) => item.classList.remove('active'))
+      link.classList.add('active')
     }))
   }
 
