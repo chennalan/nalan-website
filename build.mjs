@@ -272,12 +272,35 @@ const postEntries = await readdir(postsDir, { withFileTypes: true })
 // 图片、附件等直接放在同一个文件夹里，发布时会自动跟随文章复制。
 for (const entry of postEntries) {
   if (entry.isDirectory()) {
-    const indexPath = path.join(postsDir, entry.name, 'index.md')
+    // _template、文档目录等以下划线开头的目录永远不是文章。
+    if (entry.name.startsWith('_')) continue
+
+    const articleDir = path.join(postsDir, entry.name)
+    const indexPath = path.join(articleDir, 'index.md')
+
     try {
+      // 标准格式：content/posts/slug/index.md
       const meta = frontmatter(await readFile(indexPath, 'utf8'), indexPath)
-      posts.push({ ...meta, slug: meta.slug || entry.name, sourceDir: path.join(postsDir, entry.name) })
+      posts.push({ ...meta, slug: meta.slug || entry.name, sourceDir: articleDir })
+      continue
     } catch (error) {
       if (error.code !== 'ENOENT') throw error
+    }
+
+    // 兼容迁移中的文章：
+    // content/posts/slug/slug.md
+    // 这样把旧文章从单文件移动到文件夹时，不会因为文件名不是 index.md 而消失。
+    const files = await readdir(articleDir, { withFileTypes: true })
+    const markdownFiles = files
+      .filter((item) => item.isFile() && item.name.endsWith('.md') && item.name !== 'README.md')
+      .map((item) => item.name)
+
+    if (markdownFiles.length === 1) {
+      const legacyPath = path.join(articleDir, markdownFiles[0])
+      const meta = frontmatter(await readFile(legacyPath, 'utf8'), legacyPath)
+      posts.push({ ...meta, slug: meta.slug || entry.name, sourceDir: articleDir })
+    } else if (markdownFiles.length > 1) {
+      throw new Error(`${articleDir} contains multiple Markdown files. Use index.md as the article entry.`)
     }
   } else if (entry.isFile() && entry.name.endsWith('.md') && !['hello-world.md', 'README.md'].includes(entry.name)) {
     // 兼容旧文章：content/posts/2026-09-30.md
@@ -285,7 +308,20 @@ for (const entry of postEntries) {
     posts.push({ ...meta, slug: meta.slug || path.basename(entry.name, '.md'), sourceDir: null })
   }
 }
+
 posts.sort((a, b) => b.date.localeCompare(a.date))
+
+// slug 是文章网址，也是输出目录名；重复 slug 会导致文章互相覆盖。
+// 与其让新文章“悄悄消失”，这里直接让构建失败并明确指出冲突。
+const seenSlugs = new Map()
+for (const post of posts) {
+  if (seenSlugs.has(post.slug)) {
+    const previous = seenSlugs.get(post.slug)
+    throw new Error(`Duplicate article slug "${post.slug}" in ${previous} and ${post.title}. Please give each article a unique slug.`)
+  }
+  seenSlugs.set(post.slug, post.title)
+}
+
 for (const post of posts) {
   const dest = path.join(out, 'posts', post.slug)
   await mkdir(dest, { recursive: true })
