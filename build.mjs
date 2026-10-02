@@ -265,7 +265,7 @@ await mkdir(photoDir, { recursive: true })
 const photoExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
 
 function parsePhotoDateFromName(name) {
-  const match = name.match(/(20\\d{2})[-_.](\\d{1,2})[-_.](\\d{1,2})/)
+  const match = name.match(/(20\d{2})[-_.](\d{1,2})[-_.](\d{1,2})/)
   if (!match) return ''
   const [, y, m, d] = match
   return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
@@ -279,7 +279,7 @@ function parseJpegExifDate(buffer) {
     const marker = buffer[offset + 1]
     if (marker === 0xda || marker === 0xd9) break
     const size = buffer.readUInt16BE(offset + 2)
-    if (marker === 0xe1 && buffer.toString('ascii', offset + 4, offset + 10) === 'Exif\\0\\0') {
+    if (marker === 0xe1 && buffer.toString('ascii', offset + 4, offset + 10) === 'Exif\0\0') {
       const tiff = offset + 10
       const little = buffer.toString('ascii', tiff, tiff + 2) === 'II'
       const u16 = (p) => little ? buffer.readUInt16LE(p) : buffer.readUInt16BE(p)
@@ -297,8 +297,8 @@ function parseJpegExifDate(buffer) {
           const bytes = (typeSize[type] || 0) * countValue
           const valueOffset = bytes <= 4 ? entry + 8 : tiff + u32(entry + 8)
           if (tag === 0x9003 || tag === 0x0132) {
-            const raw = buffer.toString('ascii', valueOffset, Math.min(valueOffset + countValue, buffer.length)).replace(/\\0.*$/, '').trim()
-            const m = raw.match(/^(\\d{4}):(\\d{2}):(\\d{2})/)
+            const raw = buffer.toString('ascii', valueOffset, Math.min(valueOffset + countValue, buffer.length)).replace(/\0.*$/, '').trim()
+            const m = raw.match(/^(\d{4}):(\d{2}):(\d{2})/)
             if (m) return `${m[1]}-${m[2]}-${m[3]}`
           }
         }
