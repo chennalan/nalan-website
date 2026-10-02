@@ -181,7 +181,11 @@
     const close = () => { overlay.setAttribute('aria-hidden', 'true'); document.body.classList.remove('photo-lightbox-open') }
     const move = (delta) => { if (visibleTiles.length) open(visibleTiles[(active + delta + visibleTiles.length) % visibleTiles.length]) }
     tiles.forEach(tile => {
-      tile.addEventListener('click', () => open(tile))
+      tile.addEventListener('click', event => {
+        if (event.target.closest('.photo-detail-link')) return
+        open(tile)
+      })
+      tile.querySelector('.photo-detail-link')?.addEventListener('click', event => event.stopPropagation())
       tile.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); open(tile) } })
     })
     yearSelect?.addEventListener('change', () => { page = 1; render() })
