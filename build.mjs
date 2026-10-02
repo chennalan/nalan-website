@@ -263,16 +263,96 @@ await cpTree(path.join(root, 'assets', 'images'), path.join(out, 'assets', 'imag
 const photoDir = path.join(root, 'photo')
 await mkdir(photoDir, { recursive: true })
 const photoExtensions = new Set(['.avif', '.gif', '.jpeg', '.jpg', '.png', '.webp'])
+
+function parsePhotoDateFromName(name) {
+  const match = name.match(/(20\\d{2})[-_.](\\d{1,2})[-_.](\\d{1,2})/)
+  if (!match) return ''
+  const [, y, m, d] = match
+  return `${y}-${m.padStart(2, '0')}-${d.padStart(2, '0')}`
+}
+
+function parseJpegExifDate(buffer) {
+  if (buffer.length < 4 || buffer[0] !== 0xff || buffer[1] !== 0xd8) return ''
+  let offset = 2
+  while (offset + 4 < buffer.length) {
+    if (buffer[offset] !== 0xff) { offset += 1; continue }
+    const marker = buffer[offset + 1]
+    if (marker === 0xda || marker === 0xd9) break
+    const size = buffer.readUInt16BE(offset + 2)
+    if (marker === 0xe1 && buffer.toString('ascii', offset + 4, offset + 10) === 'Exif\\0\\0') {
+      const tiff = offset + 10
+      const little = buffer.toString('ascii', tiff, tiff + 2) === 'II'
+      const u16 = (p) => little ? buffer.readUInt16LE(p) : buffer.readUInt16BE(p)
+      const u32 = (p) => little ? buffer.readUInt32LE(p) : buffer.readUInt32BE(p)
+      const typeSize = { 1: 1, 2: 1, 3: 2, 4: 4, 5: 8 }
+      const readIfd = (ifdOffset) => {
+        if (ifdOffset < 0 || tiff + ifdOffset + 2 > buffer.length) return ''
+        const count = u16(tiff + ifdOffset)
+        for (let i = 0; i < count; i += 1) {
+          const entry = tiff + ifdOffset + 2 + i * 12
+          if (entry + 12 > buffer.length) break
+          const tag = u16(entry)
+          const type = u16(entry + 2)
+          const countValue = u32(entry + 4)
+          const bytes = (typeSize[type] || 0) * countValue
+          const valueOffset = bytes <= 4 ? entry + 8 : tiff + u32(entry + 8)
+          if (tag === 0x9003 || tag === 0x0132) {
+            const raw = buffer.toString('ascii', valueOffset, Math.min(valueOffset + countValue, buffer.length)).replace(/\\0.*$/, '').trim()
+            const m = raw.match(/^(\\d{4}):(\\d{2}):(\\d{2})/)
+            if (m) return `${m[1]}-${m[2]}-${m[3]}`
+          }
+        }
+        return ''
+      }
+      const ifd0 = u32(tiff + 4)
+      const direct = readIfd(ifd0)
+      if (direct) return direct
+    }
+    offset += 2 + size
+  }
+  return ''
+}
+
+async function photoDate(name) {
+  const fromName = parsePhotoDateFromName(name)
+  if (fromName) return fromName
+  if (/\\.jpe?g$/i.test(name)) {
+    try {
+      const exifDate = parseJpegExifDate(await readFile(path.join(photoDir, name)))
+      if (exifDate) return exifDate
+    } catch {}
+  }
+  return ''
+}
+
+const photoCaption = (name) => {
+  const baseName = path.basename(name, path.extname(name))
+  const cleaned = baseName
+    .replace(/^20\\d{2}[-_.]\\d{1,2}[-_.]\\d{1,2}[-_\\s]*/, '')
+    .replace(/^IMG[_-]?/i, '')
+    .replace(/[-_]+/g, ' ')
+    .trim()
+  return cleaned || '生活记录'
+}
+
 const photoFiles = (await readdir(photoDir, { withFileTypes: true }))
   .filter((entry) => entry.isFile() && photoExtensions.has(path.extname(entry.name).toLowerCase()))
   .map((entry) => entry.name)
-  .sort((a, b) => a.localeCompare(b, 'zh-CN', { numeric: true, sensitivity: 'base' }))
-await mkdir(path.join(out, 'photo'), { recursive: true })
-for (const name of photoFiles) await copyFile(path.join(photoDir, name), path.join(out, 'photo', name))
 
-const photoCaption = (name) => path.basename(name, path.extname(name)).replace(/[-_]+/g, ' ').trim()
-const photoPreviewFiles = photoFiles.slice(0, 3).map((name) => url(`/photo/${encodeURIComponent(name)}`))
+const photoItems = []
+for (const name of photoFiles) {
+  const date = await photoDate(name)
+  photoItems.push({ name, date, caption: photoCaption(name) })
+}
+photoItems.sort((a, b) => (b.date || '').localeCompare(a.date || '') || a.name.localeCompare(b.name, 'zh-CN', { numeric: true, sensitivity: 'base' }))
+
+await mkdir(path.join(out, 'photo'), { recursive: true })
+for (const item of photoItems) await copyFile(path.join(photoDir, item.name), path.join(out, 'photo', item.name))
+await writeFile(path.join(out, 'photo', 'manifest.json'), JSON.stringify(photoItems))
+
+const photoPreviewFiles = photoItems.slice(0, 3).map((item) => url(`/photo/${encodeURIComponent(item.name)}`))
 const photoPreview = photoPreviewFiles.map((src) => `<img src="${src}" alt="">`).join('')
+const photoFiles = photoItems.map((item) => item.name)
 
 const postsDir = path.join(root, 'content', 'posts')
 const posts = []
@@ -362,13 +442,15 @@ const projectPage = `<section class="page-wrap"><header class="page-heading"><p 
 await mkdir(path.join(out, 'projects'), { recursive: true })
 await writeFile(path.join(out, 'projects', 'index.html'), shell('项目', '纳兰做过的项目与小实验', projectPage, 'projects', 1))
 
-const photoTiles = photoFiles.length
-  ? photoFiles.map((name) => {
-      const caption = photoCaption(name)
-      return `<figure class="photo-tile"><img src="${url(`/photo/${encodeURIComponent(name)}`)}" alt="${escapeHtml(caption)}" loading="lazy"><figcaption>${escapeHtml(caption)}</figcaption></figure>`
+const photoTiles = photoItems.length
+  ? photoItems.map((item, index) => {
+      const src = url(`/photo/${encodeURIComponent(item.name)}`)
+      const date = item.date || ''
+      const meta = date ? `${date}${item.caption ? ' · ' : ''}${item.caption}` : item.caption
+      return `<figure class="photo-tile" data-photo-index="${index}" tabindex="0" role="button" aria-label="查看照片：${escapeHtml(item.caption)}"><img src="${src}" alt="${escapeHtml(item.caption)}" loading="lazy"><figcaption><strong>${escapeHtml(item.caption)}</strong>${date ? `<time datetime="${date}">${date}</time>` : ''}</figcaption></figure>`
     }).join('')
-  : '<p class="photo-empty">还没有照片。</p>'
-const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>工作、生活和旅途中留下的一些瞬间。</p></header><div class="photo-grid">${photoTiles}</div></section>`
+  : '<p class="photo-empty">还没有照片。把照片上传到 photo/ 文件夹，推送后网站会自动生成照片墙。</p>'
+const photos = `<section class="page-wrap"><header class="page-heading"><p class="eyebrow">LITTLE MOMENTS</p><h1>照片</h1><p>把照片上传到 <code>photo/</code>，网站会自动读取照片、日期和描述，并生成照片墙。</p></header><div class="photo-toolbar"><span>${photoItems.length} 张照片</span><span>点击照片查看大图 · 每页 18 张</span></div><div class="photo-grid" data-photo-grid>${photoTiles}</div><nav class="photo-pagination" data-photo-pagination aria-label="照片分页"></nav></section>`
 await mkdir(path.join(out, 'photos'), { recursive: true })
 await writeFile(path.join(out, 'photos', 'index.html'), shell('照片', '生活与记录', photos, 'photos', 1))
 
