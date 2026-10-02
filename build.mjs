@@ -450,7 +450,7 @@ const projectPage = `<section class="page-wrap"><header class="page-heading"><p 
 await mkdir(path.join(out, 'projects'), { recursive: true })
 await writeFile(path.join(out, 'projects', 'index.html'), shell('项目', '纳兰做过的项目与小实验', projectPage, 'projects', 1))
 
-const photoDetailDirName = (name) => encodeURIComponent(name)
+const photoDetailDirName = (name) => name.replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/^-+|-+$/g, '') || 'photo'
 const photoDetailHref = (name) => url(`/photos/${photoDetailDirName(name)}/`)
 const photoTiles = photoItems.length
   ? photoItems.map((item, index) => {
