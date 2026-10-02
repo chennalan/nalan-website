@@ -1,11 +1,11 @@
 ---
-title: "文章标题"
+title: "测试"
 description: "一句话简介，可留空"
 publishedAt: "2026-10-02"
 slug: "your-slug"
 category: "随笔"
 tags: "生活,思考"
-cover: "./cover.jpg"
+cover: "./cover.png"
 ---
 
 这里开始写正文。
