@@ -5,7 +5,7 @@ publishedAt: "2026-10-04"
 slug: "pin-ming-huo-zai-shun-qi-zi-ran-de-shun-jian"
 category: "随笔"
 tags: "生活,思考,自我"
-cover: "./cover.png"
+cover: "./cover.svg"
 ---
 
 有时候，总想发起一场振奋精神的运动。
