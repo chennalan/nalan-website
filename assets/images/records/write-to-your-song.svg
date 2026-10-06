@@ -1,1 +1,11 @@
-__SVG__
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+<rect width="1000" height="1000" fill="#050505"/>
+<circle cx="500" cy="500" r="360" fill="#111"/>
+<circle cx="500" cy="500" r="330" fill="none" stroke="#292929" stroke-width="3"/>
+<circle cx="500" cy="500" r="250" fill="none" stroke="#222" stroke-width="2"/>
+<circle cx="500" cy="500" r="170" fill="none" stroke="#292929" stroke-width="2"/>
+<circle cx="500" cy="500" r="82" fill="#151515"/>
+<circle cx="500" cy="500" r="16" fill="#777"/>
+<text x="500" y="145" text-anchor="middle" fill="#ddd" font-family="Arial, sans-serif" font-size="42">写给你的歌</text>
+<text x="500" y="880" text-anchor="middle" fill="#aaa" font-family="Arial, sans-serif" font-size="30">刘明汉</text>
+</svg>
