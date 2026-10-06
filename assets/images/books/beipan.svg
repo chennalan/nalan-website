@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120">
+<rect width="800" height="1120" fill="#111827"/>
+<rect x="34" y="34" width="732" height="1052" fill="none" stroke="#334155" stroke-width="4"/>
+<g fill="#f8fafc">
+  <text x="400" y="250" text-anchor="middle" font-family="serif" font-size="150" font-weight="700">背叛</text>
+  <text x="400" y="330" text-anchor="middle" font-family="sans-serif" font-size="34">豆豆</text>
+  <text x="400" y="390" text-anchor="middle" font-family="serif" font-size="28" letter-spacing="8">宋一坤 · 夏英杰</text>
+  <g opacity=".7">
+    <path d="M120 720 L300 500 L390 720 L520 470 L680 720 L560 720 L475 590 L395 790 L290 610 L205 720 Z" fill="#2563eb"/>
+    <path d="M90 820 L260 650 L370 840 L510 620 L710 820 L620 900 L500 760 L390 940 L250 760 L150 900 Z" fill="#1d4ed8"/>
+  </g>
+  <text x="400" y="1010" text-anchor="middle" font-family="serif" font-size="32">群众出版社</text>
+  <text x="400" y="1055" text-anchor="middle" font-family="sans-serif" font-size="22" opacity=".75">世纪之交的个人生命史</text>
+</g>
+</svg>
