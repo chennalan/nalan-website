@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120">
+<rect width="800" height="1120" fill="#e9331b"/>
+<rect x="32" y="32" width="736" height="1056" fill="none" stroke="#d82816" stroke-width="4"/>
+<g fill="#111">
+  <text x="400" y="245" text-anchor="middle" font-family="serif" font-size="116" font-weight="700">天幕红尘</text>
+  <text x="400" y="315" text-anchor="middle" font-family="sans-serif" font-size="30">豆豆 / 著</text>
+  <text x="690" y="170" font-family="serif" font-size="28" writing-mode="tb">《遥远的救世主》之后最新政治小说</text>
+  <g transform="translate(400 650)">
+    <circle cy="-125" r="42"/>
+    <path d="M-52-75 Q0-105 52-75 L72 115 L-72 115 Z"/>
+    <path d="M-95-35 L-48-10 L-60 10 L-110-10 Z"/>
+    <path d="M95-35 L48-10 L60 10 L110-10 Z"/>
+    <path d="M-55 110 L-90 245 L-48 245 L0 115 L48 245 L90 245 L55 110 Z"/>
+  </g>
+  <text x="400" y="1010" text-anchor="middle" font-family="serif" font-size="34">作家出版社</text>
+</g>
+</svg>
