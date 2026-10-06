@@ -195,7 +195,7 @@ const books = [
 const albums = [
   ['TIM', 'Avicii', 'tim.jpg'], ['The Fall-Off', 'J. Cole', 'the-fall-off.jpg'], ['HOPE', 'NF', 'hope.jpg'], ['Melodie', 'CRO', 'melodie.jpg'],
   ['2001', 'Dr. Dre', '2001.jpg'], ['Trench', 'twenty one pilots', 'trench.jpg'], ['Clancy', 'twenty one pilots', 'clancy.jpg'],
-  ['替换歌曲', '网易云音乐', 'https://music.163.com/#/song?id=405253305'], ['Starboy', 'The Weeknd', 'starboy.jpg'], ['After Hours', 'The Weeknd', 'after-hours.jpg'],
+  ['405253305', '网易云音乐', 'breach.jpg'], ['Starboy', 'The Weeknd', 'starboy.jpg'], ['After Hours', 'The Weeknd', 'after-hours.jpg'],
   ['Hurry Up Tomorrow', 'The Weeknd', 'hurry-up-tomorrow.jpg'], ['The Death of Slim Shady', 'Eminem', 'death-of-slim-shady.jpg'],
   ['Random Access Memories', 'Daft Punk', 'random-access-memories.jpg'], ['Urban Flora', 'Alina Baraz & Galimatias', 'urban-flora.jpg'],
 ]
