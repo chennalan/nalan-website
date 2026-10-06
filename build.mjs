@@ -184,7 +184,7 @@ const projects = [
   ['PopMenu', '大学期间写的 iOS 弹出菜单开源库。', 'https://github.com/CaliCastle/PopMenu', 'popmenu.png', 'github.com'],
 ]
 const books = [
-  ['遥远的救世主', '豆豆', 'https://images1.iyunshu.com/G00/M00/7E/3E/CgoVcmkCzASAPYyRAAnzi8huJB4571.png'], ['天幕红尘', '豆豆', 'https://rheinbook.com/cdn/shop/files/IMG_1543.jpg?v=1756908768'], ['Refactoring UI', 'Adam Wathan & Steve Schoger', 'refactoring-ui.jpg'],
+  ['遥远的救世主', '豆豆', 'https://images1.iyunshu.com/G00/M00/7E/3E/CgoVcmkCzASAPYyRAAnzi8huJB4571.png'], ['天幕红尘', '豆豆', 'tianmu-hongchen.svg'], ['Refactoring UI', 'Adam Wathan & Steve Schoger', 'refactoring-ui.jpg'],
   ['Universal Principles of UX', 'Irene Pereyra', 'universal-principles-ux.jpg'], ['Just Enough Design', 'Taku Satoh', 'just-enough-design.jpg'],
   ['The Creative Act', 'Rick Rubin', 'creative-act.jpg'], ['Steal Like an Artist', 'Austin Kleon', 'steal-like-an-artist.jpg'],
   ['Show Your Work!', 'Austin Kleon', 'show-your-work.jpg'], ['Build', 'Tony Fadell', 'build.jpg'], ['Rework', 'Jason Fried & DHH', 'rework.png'],
