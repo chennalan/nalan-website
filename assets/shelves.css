@@ -18,7 +18,7 @@
 .book-inner{position:absolute;left:0;bottom:0;display:block;width:clamp(100px,22vw,138px);height:188px;transform:rotateY(90deg);transform-origin:left center;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.22,.75,.18,1);outline-offset:3px}
 .book-frame[data-active] .book-inner{transform:rotateY(0)}
 .book-cover{position:absolute;inset:0;display:block;overflow:hidden;border:1px solid #ded9cf;border-radius:2px 4px 4px 2px;background:var(--paper);box-shadow:1px 2px 4px #211e1720,5px 12px 18px -10px #211e1740;transform:translateZ(11px);backface-visibility:hidden}
-.book-cover-art{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom;user-select:none;-webkit-user-drag:none}
+.book-cover-art{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;user-select:none;-webkit-user-drag:none}
 .book-spine{position:absolute;top:0;bottom:0;left:0;display:flex;width:clamp(15px,3.7vw,22px);align-items:center;justify-content:center;gap:5px;overflow:hidden;border:1px solid #00000017;border-radius:2px;background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#d8d0c2;color:#514a3e;transform:rotateY(-90deg) translateZ(11px);transform-origin:left center;backface-visibility:hidden}
 .book-frame:nth-child(5n + 2) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#c6d0c3;color:#35463a}
 .book-frame:nth-child(5n + 3) .book-spine{background:linear-gradient(90deg,#0002,transparent 28%,#fff2 76%,#0001),#c9c1d1;color:#443b50}
