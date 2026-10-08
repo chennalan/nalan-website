@@ -174,7 +174,7 @@ function postRow(post, format = 'full') {
 }
 
 const projects = [
-  ['Cali 宝宝', '宝宝的事很多，不必都靠脑子记。', '/calibaby', 'calibaby-app-icon.png', 'cali.so'],
+  ['纳兰工具箱', '收纳常用网页工具，抠图、证件照、密码管理等工具随时打开即用。', 'https://tool.chennalan.cn', 'calibaby-app-icon.png', 'tool.chennalan.cn'],
   ['佐玩官网', '为自己的公司佐玩设计开发的官网，简约的设计结合噪点材质感。', 'https://zolplay.com', 'zolplay.png', 'zolplay.com'],
   ['Well Word', '5×5 英语拼字游戏。', 'https://wellwordgame.com/zh-CN', 'well-word.png', 'wellwordgame.com'],
   ['ChatGPT Slack 机器人', '公司内部 Slack 的雏形版 ChatGPT 机器人。', 'https://github.com/zolplay-cn/chatgpt-slack', 'chatgpt-slack.png', 'github.com'],
