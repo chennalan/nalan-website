@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1120">
+<defs>
+  <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#e8d9b9"/><stop offset=".56" stop-color="#c8b18c"/><stop offset="1" stop-color="#6f786d"/></linearGradient>
+  <linearGradient id="sea" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5b7776"/><stop offset="1" stop-color="#243e43"/></linearGradient>
+</defs>
+<rect width="800" height="1120" fill="#f3ead8"/>
+<rect x="30" y="30" width="740" height="1060" fill="url(#sky)"/>
+<circle cx="575" cy="320" r="100" fill="#f7e9c8" opacity=".82"/>
+<path d="M30 610 Q180 545 320 610 T770 590 L770 1090 L30 1090Z" fill="#8b927d"/>
+<path d="M30 700 Q220 650 390 710 T770 680 L770 1090 L30 1090Z" fill="url(#sea)"/>
+<path d="M30 830 Q220 790 400 835 T770 820 M30 900 Q220 875 400 905 T770 890" fill="none" stroke="#c8c4a8" stroke-width="3" opacity=".6"/>
+<path d="M500 625 Q535 580 565 625 L585 720 L475 720Z" fill="#2d3634"/>
+<circle cx="535" cy="585" r="22" fill="#2d3634"/>
+<path d="M535 720 L525 810 M535 720 L560 805" stroke="#2d3634" stroke-width="15" stroke-linecap="round"/>
+<rect x="54" y="54" width="692" height="1012" fill="none" stroke="#f8f0df" stroke-width="2"/>
+<text x="400" y="160" text-anchor="middle" font-family="serif" font-size="30" letter-spacing="12" fill="#334440">W. SOMERSET MAUGHAM</text>
+<text x="400" y="250" text-anchor="middle" font-family="serif" font-size="76" font-weight="700" fill="#253a38">月亮和六便士</text>
+<text x="400" y="305" text-anchor="middle" font-family="serif" font-size="31" letter-spacing="8" fill="#354a45">THE MOON AND SIXPENCE</text>
+<path d="M280 355 H520" stroke="#465c53" stroke-width="2"/>
+<text x="400" y="1010" text-anchor="middle" font-family="serif" font-size="34" fill="#f5e8d0">毛姆 著</text>
+</svg>
