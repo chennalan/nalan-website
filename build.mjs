@@ -87,7 +87,7 @@ function inline(text) {
   let value = escapeHtml(text)
   value = value.replace(/`([^`]+)`/g, '<code>$1</code>')
   value = value.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/\*([^*]+)\*/g, '<em>$1</em>').replace(/~~([^~]+)~~/g, '<del>$1</del>')
-  value = value.replace(/!\[([^\]]*)\]\(([^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, alt, src, title = '') => `<figure class="article-figure"><img src="${escapeHtml(src.replace(/#\d+x\d+$/, ''))}" alt="${alt}" loading="lazy">${title ? `<figcaption>${escapeHtml(title)}</figcaption>` : alt ? `<figcaption>${alt}</figcaption>` : ''}</figure>`)
+  value = value.replace(/!\[([^\]]*)\]\(([^\s)]+)(?:\s+(?:&quot;([^&]*?)&quot;|"([^"]*)"))?\)/g, (_, alt, src, escapedTitle = '', rawTitle = '') => { const title = escapedTitle || rawTitle; return `<figure class="article-figure"><img src="${escapeHtml(src.replace(/#\d+x\d+$/, ''))}" alt="${alt}" loading="lazy">${title ? `<figcaption>${title}</figcaption>` : alt ? `<figcaption>${alt}</figcaption>` : ''}</figure>` })
   value = value.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|[^\s)]+)(?:\s+"([^"]*)")?\)/g, (_, label, href) => `<a href="${escapeHtml(href)}"${href.startsWith('http') ? ' target="_blank" rel="noreferrer"' : ''}>${label}</a>`)
   value = value.replace(/<InlineProductName product="([^"]+)"\s*\/>/g, '<span class="product-tag">$1</span>')
   value = value.replace(/\[\^([^\]]+)\]/g, '<sup>[$1]</sup>')
