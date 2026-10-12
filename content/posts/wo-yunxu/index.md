@@ -2,6 +2,8 @@
 title: 我允许：允许一切如其所是
 date: 2026-10-12
 slug: wo-yunxu
+cover: cover.svg
+coverCaption: 允许一切如其所是
 description: 有些事无法重来，有些人无法改变。学着允许事情发生、允许情绪经过，也允许自己暂时不完美。
 category: 随笔
 tags: 生活,思考,情绪
