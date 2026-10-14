@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f3d8c6"/><stop offset=".45" stop-color="#ffb45f"/><stop offset=".73" stop-color="#ef784b"/><stop offset="1" stop-color="#354c5a"/></linearGradient>
+ <linearGradient id="water" x2="0" y2="1"><stop stop-color="#e9a06c"/><stop offset="1" stop-color="#233d4b"/></linearGradient>
+ <linearGradient id="paper" x2="1" y2="0"><stop stop-color="#fff4e6" stop-opacity=".94"/><stop offset="1" stop-color="#fff4e6" stop-opacity=".56"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="22"/></filter>
+</defs>
+<rect width="1200" height="800" fill="url(#sky)"/>
+<circle cx="735" cy="400" r="110" fill="#fff0bd" opacity=".8" filter="url(#glow)"/><circle cx="735" cy="400" r="35" fill="#fff2c8"/>
+<path d="M0 470 L100 390 200 440 330 350 445 450 570 365 680 450 830 360 950 435 1080 355 1200 420 V800 H0Z" fill="#8a7776" opacity=".55"/>
+<path d="M0 530 L130 455 245 505 390 420 520 520 660 430 790 510 920 420 1050 490 1200 430 V800 H0Z" fill="#4c5b60"/>
+<path d="M0 565 Q220 540 390 572 T760 565 T1200 555 V800 H0Z" fill="url(#water)"/>
+<path d="M700 445 Q735 510 760 800 H715 Q720 565 700 445Z" fill="#ffdba0" opacity=".38"/>
+<path d="M0 0 H670 Q620 170 700 330 Q630 510 675 800 H0Z" fill="url(#paper)"/>
+<g fill="#4b2d22" font-family="Noto Serif CJK SC, Songti SC, SimSun, serif">
+ <text x="82" y="95" font-size="18" letter-spacing="4">纳兰的个人小站</text>
+ <path d="M82 122 H160" stroke="#4b2d22" stroke-width="2"/>
+ <text x="78" y="240" font-size="88" letter-spacing="7">十月与落日</text>
+ <text x="84" y="300" font-size="30" letter-spacing="2">在渐凉的风里，学会与生活和解</text>
+ <text x="85" y="356" font-size="18" letter-spacing="3">随笔　|　生活感悟　|　十月</text>
+ <path d="M85 390 H530" stroke="#8d5b43" stroke-width="1.5" opacity=".65"/>
+ <text x="85" y="445" font-size="23">十月的风，</text><text x="85" y="485" font-size="23">把夏天的热烈吹成了温柔；</text>
+ <text x="85" y="525" font-size="23">而落日，</text><text x="85" y="565" font-size="23">把一天的喧嚣，收进了黄昏。</text>
+ <text x="85" y="640" font-size="19" letter-spacing="2">有些告别不是失去，</text><text x="85" y="675" font-size="19" letter-spacing="2">而是把生活轻轻交还给时间。</text>
+</g>
+<g fill="#3c2b20" opacity=".9"><path d="M990 0 Q1030 80 1110 125 Q1060 135 1020 110 Q1040 170 1100 195 Q1020 188 980 145 Q960 220 920 238 Q940 150 900 90 Q960 105 990 0Z"/><path d="M1200 145 Q1130 175 1100 245 Q1160 225 1200 205Z"/></g>
+<g fill="#a74d2b" opacity=".92"><ellipse cx="1030" cy="250" rx="18" ry="38" transform="rotate(-38 1030 250)"/><ellipse cx="1138" cy="300" rx="16" ry="32" transform="rotate(30 1138 300)"/><ellipse cx="950" cy="315" rx="13" ry="28" transform="rotate(-55 950 315)"/></g>
+<text x="85" y="752" fill="#f9e6d0" font-family="Noto Serif CJK SC, Songti SC, SimSun, serif" font-size="18" letter-spacing="3">十月渐深，落日依旧。</text>
+</svg>
