@@ -258,6 +258,9 @@ await mkdir(path.join(out, 'posts'), { recursive: true })
 await copyFile(path.join(root, 'assets', 'style.css'), path.join(out, 'assets', 'style.css'))
 await copyFile(path.join(root, 'assets', 'site.js'), path.join(out, 'assets', 'site.js'))
 await copyFile(path.join(root, 'assets', 'shelves.css'), path.join(out, 'assets', 'shelves.css'))
+for (const name of ['favicon.svg', 'favicon.ico', 'favicon.png', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png']) {
+  await copyFile(path.join(root, 'assets', name), path.join(out, 'assets', name))
+}
 await cpTree(path.join(root, 'assets', 'images'), path.join(out, 'assets', 'images'))
 
 const photoDir = path.join(root, 'photo')
