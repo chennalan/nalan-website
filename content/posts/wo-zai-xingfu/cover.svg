@@ -17,7 +17,7 @@
 <path d="M900 668 Q965 620 1000 560 Q1035 520 1080 500" fill="none" stroke="#d4b9a0" stroke-width="7" opacity=".7"/>
 <path d="M1030 500 Q1080 465 1085 405 Q1086 360 1065 330 Q1100 365 1110 402 Q1130 370 1140 330 Q1140 395 1120 430 Q1160 420 1195 390 Q1160 445 1100 465Z" fill="#253e37"/>
 <path d="M1095 455 Q1070 390 1015 365 M1098 444 Q1140 395 1175 365 M1080 410 Q1050 360 1045 335" fill="none" stroke="#253e37" stroke-width="12" stroke-linecap="round"/>
-<g opacity=".9" fill="#2b4940"><circle cx="1045" cy="345" r="55"/><circle cx="1115" cy="355" r="68"/><circle cx="1160" cy="390" r="49"/><circle cx="1070" cy="395" r="60/></g>
+<g opacity=".9" fill="#2b4940"><circle cx="1045" cy="345" r="55"/><circle cx="1115" cy="355" r="68"/><circle cx="1160" cy="390" r="49"/><circle cx="1070" cy="395" r="60"/></g>
 <g transform="translate(880 650)" stroke="#684b37" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none">
  <path d="M0 20 L30 130 M100 0 L140 125 M20 40 L120 25 M35 45 L80 110 M80 110 L140 125"/>
  <path d="M5 10 Q60 -5 115 0 L126 55 Q72 65 18 55Z" fill="#c59a70" stroke="#684b37"/>
