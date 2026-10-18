@@ -5,7 +5,7 @@ publishedAt: "2026-10-18"
 slug: "wo-an-an-qi-dai-yi-zhong-ke-neng"
 category: "随笔"
 tags: "生活,感受,读书"
-cover: "./cover.svg"
+cover: "./cover.jpg"
 ---
 
 > 我暗暗期待一种可能：不一定要受苦或搞得天翻地覆，也可能过一个有感觉的人生。
