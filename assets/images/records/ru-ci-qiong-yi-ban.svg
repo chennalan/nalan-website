@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600">
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#182a38"/><stop offset=".55" stop-color="#647b80"/><stop offset="1" stop-color="#d8bda1"/></linearGradient>
+ <linearGradient id="water" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#c9d4ce" stop-opacity=".1"/><stop offset="1" stop-color="#142630" stop-opacity=".8"/></linearGradient>
+ <radialGradient id="moon"><stop stop-color="#fff0d4"/><stop offset="1" stop-color="#fff0d4" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="600" height="600" fill="url(#bg)"/>
+<circle cx="425" cy="170" r="110" fill="url(#moon)"/><circle cx="425" cy="170" r="39" fill="#f5e6ca" opacity=".92"/>
+<path d="M0 355 Q85 315 170 352 T340 350 T600 332 V600 H0Z" fill="#253b44" opacity=".65"/>
+<path d="M0 402 Q95 376 190 407 T390 396 T600 386 V600 H0Z" fill="url(#water)"/>
+<g fill="none" stroke="#e6dfcf" stroke-opacity=".45" stroke-width="2"><path d="M35 438 Q130 425 220 440 T410 436 T565 433"/><path d="M78 466 Q165 454 255 468 T430 465"/><path d="M20 500 Q110 488 205 502 T390 499 T580 496"/></g>
+<g fill="#f7e8d1" opacity=".8"><circle cx="90" cy="112" r="2"/><circle cx="146" cy="175" r="2"/><circle cx="250" cy="91" r="1.8"/><circle cx="330" cy="137" r="1.5"/><circle cx="505" cy="95" r="1.8"/></g>
+<text x="48" y="74" fill="#f8f0e3" font-family="serif" font-size="15" letter-spacing="5">YU NAYI · 2019</text>
+<text x="48" y="520" fill="#fff5e6" font-family="serif" font-size="39" letter-spacing="3">如词穷一般</text>
+<text x="51" y="555" fill="#fff5e6" opacity=".8" font-family="sans-serif" font-size="17" letter-spacing="7">于 娜 懿</text>
+<path d="M48 480 H190" stroke="#fff5e6" stroke-opacity=".8"/>
+</svg>
