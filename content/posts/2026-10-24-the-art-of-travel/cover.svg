@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="sky" x2="0" y2="1"><stop stop-color="#6b7f98"/><stop offset=".48" stop-color="#f5b98e"/><stop offset="1" stop-color="#f9dfbb"/></linearGradient><linearGradient id="sea" x2="0" y2="1"><stop stop-color="#c88f78"/><stop offset="1" stop-color="#304b62"/></linearGradient><linearGradient id="shade" x2="0" y2="1"><stop stop-color="#17283a" stop-opacity=".04"/><stop offset="1" stop-color="#17283a" stop-opacity=".8"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#sky)"/><circle cx="375" cy="360" r="105" fill="#ffe8be" opacity=".85"/>
+<path d="M0 405 105 320 185 362 275 290 355 372 460 325 565 390 680 335 790 390 910 330 1020 390 1200 310V675H0Z" fill="#6b6b70" opacity=".65"/>
+<path d="M0 435Q180 405 360 445T720 430T1200 445V675H0Z" fill="url(#sea)"/><g stroke="#f9d4ad" stroke-width="3" opacity=".55"><path d="M120 485h260M70 525h420M400 565h330M160 610h520"/></g>
+<path d="M0 0H1200V675H0Z" fill="url(#shade)"/>
+<path d="M0 0H120V675H0Z" fill="#1a2936" opacity=".5"/><path d="M1050 0H1200V675H1050Z" fill="#1a2936" opacity=".42"/>
+<path d="M935 675 910 550 940 465 980 420 1020 462 1045 555 1065 675Z" fill="#1e2b37"/><circle cx="980" cy="390" r="35" fill="#1e2b37"/><path d="M930 490 860 585 880 600 965 535M1025 490 1080 565 1060 580 1000 530" fill="#1e2b37"/>
+<rect x="70" y="70" width="1060" height="535" fill="none" stroke="#fff0d8" stroke-opacity=".55" stroke-width="2"/>
+<text x="105" y="145" font-family="Georgia,serif" font-size="22" letter-spacing="8" fill="#fff0d8">NOTES ON TRAVEL</text>
+<text x="105" y="245" font-family="serif" font-size="62" fill="#fff7e9">有时候，我们只是想离开</text><text x="105" y="325" font-family="serif" font-size="62" fill="#fff7e9">现在的地方</text>
+<path d="M108 355h190" stroke="#fff0d8" stroke-width="2"/>
+<text x="108" y="400" font-family="serif" font-size="23" fill="#fff0d8">目的地其实并不重要。</text><text x="108" y="438" font-family="serif" font-size="23" fill="#fff0d8">重要的是，暂时走出此刻的世界。</text>
+<text x="108" y="555" font-family="serif" font-size="19" letter-spacing="2" fill="#fff0d8">阿兰·德波顿《旅行的艺术》</text>
+</svg>
