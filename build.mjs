@@ -196,7 +196,7 @@ const albums = [
   ['TIM', 'Avicii', 'tim.jpg'], ['The Fall-Off', 'J. Cole', 'the-fall-off.jpg'], ['HOPE', 'NF', 'hope.jpg'], ['Melodie', 'CRO', 'melodie.jpg'],
   ['2001', 'Dr. Dre', '2001.jpg'], ['Trench', 'twenty one pilots', 'trench.jpg'], ['Clancy', 'twenty one pilots', 'clancy.jpg'],
   ['写给你的歌', '刘明汉', 'write-to-your-song.svg'], ['爱即无罪', '于娜懿', 'https://img3.kuwo.cn/star/albumcover/500/68/41/2175148895.jpg'], ['如词穷一般', '于娜懿', 'ru-ci-qiong-yi-ban.svg'],
-  ['Hurry Up Tomorrow', 'KasaYAYA', 'hurry-up-tomorrow.jpg'], ['The Death of Slim Shady', 'Eminem', 'death-of-slim-shady.jpg'],
+  ['漫步在岁月洪流', 'KasaYAYA', 'man-bu-zai-sui-yue-hong-liu.svg'], ['The Death of Slim Shady', 'Eminem', 'death-of-slim-shady.jpg'],
   ['Random Access Memories', 'Daft Punk', 'random-access-memories.jpg'], ['Urban Flora', 'Alina Baraz & Galimatias', 'urban-flora.jpg'],
 ]
 
