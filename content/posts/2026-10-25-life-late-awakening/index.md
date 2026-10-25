@@ -5,7 +5,7 @@ publishedAt: 2026-10-25
 slug: life-late-awakening
 category: 随笔
 tags: 成长, 自我和解, 人生感悟, 生活
-cover: cover.svg
+cover: cover.png
 coverCaption: 看清世事，却不必被世事改变得面目全非
 ---
 
