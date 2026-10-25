@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675">
+<defs><linearGradient id="s" x2="0" y2="1"><stop stop-color="#294a72"/><stop offset=".48" stop-color="#f2a67d"/><stop offset="1" stop-color="#f7d7ad"/></linearGradient><linearGradient id="w" x2="0" y2="1"><stop stop-color="#b98075"/><stop offset="1" stop-color="#203c58"/></linearGradient><linearGradient id="v" x2="0" y2="1"><stop stop-color="#15273a" stop-opacity=".1"/><stop offset="1" stop-color="#15273a" stop-opacity=".78"/></linearGradient></defs>
+<rect width="1200" height="675" fill="url(#s)"/><circle cx="790" cy="370" r="76" fill="#ffe7bc" opacity=".9"/>
+<path d="M0 400 110 322 220 370 335 300 440 380 560 320 660 390 790 318 920 390 1040 310 1200 370V675H0Z" fill="#53647a" opacity=".78"/>
+<path d="M0 438Q160 400 320 440T640 435T960 440T1200 435V675H0Z" fill="url(#w)"/><g stroke="#f7d4ae" stroke-width="3" opacity=".5"><path d="M530 490h260M450 530h380M570 570h260M380 610h440"/></g>
+<path d="M0 0H1200V675H0Z" fill="url(#v)"/><path d="M0 0H42V675H0Z" fill="#142638" opacity=".5"/>
+<path d="M910 675 890 548 918 475 954 430 991 470 1018 548 1040 675Z" fill="#172635"/><circle cx="954" cy="402" r="32" fill="#172635"/><path d="M922 485 860 566 880 582 950 520M990 485 1050 560 1032 578 970 520" fill="#172635"/>
+<rect x="60" y="55" width="1080" height="565" fill="none" stroke="#f9e8d3" stroke-opacity=".6" stroke-width="2"/>
+<text x="100" y="125" font-family="Georgia,serif" font-size="22" letter-spacing="7" fill="#fff0dc">A NOTE TO MYSELF</text>
+<text x="100" y="230" font-family="serif" font-size="66" fill="#fff7e9">还没有开始</text><text x="100" y="315" font-family="serif" font-size="66" fill="#fff7e9">就定义自己了吗</text>
+<path d="M103 344h205" stroke="#fff0dc" stroke-width="2"/>
+<text x="103" y="392" font-family="serif" font-size="24" fill="#fff0dc">我们总在真正开始之前，</text><text x="103" y="432" font-family="serif" font-size="24" fill="#fff0dc">就给自己贴上各种标签。</text><text x="103" y="472" font-family="serif" font-size="24" fill="#fff0dc">可人生的可能性，不该被预设的答案提前封死。</text>
+<text x="103" y="560" font-family="serif" font-size="22" fill="#fff0dc">不是你不够好，而是你还没开始。</text>
+</svg>
