@@ -5,7 +5,7 @@ publishedAt: 2026-11-01
 slug: unaccustomed-world
 category: 随笔
 tags: 中岛敦, 山月记, 孤独, 自我与世界
-cover: cover.svg
+cover: cover.png
 coverCaption: 有些清醒，是一种漫长的孤独
 ---
 
