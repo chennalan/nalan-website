@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+ <linearGradient id="sky" x1="0" y1="0" x2="0.9" y2="1"><stop stop-color="#65758a"/><stop offset=".52" stop-color="#d3a58c"/><stop offset="1" stop-color="#f1c7a1"/></linearGradient>
+ <linearGradient id="room" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#292b32"/><stop offset="1" stop-color="#62514a"/></linearGradient>
+ <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8c9caf" stop-opacity=".2"/><stop offset="1" stop-color="#f4c4a0" stop-opacity=".08"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+</defs>
+<rect width="1600" height="900" fill="url(#room)"/>
+<rect x="330" y="0" width="1270" height="760" fill="url(#sky)"/>
+<circle cx="1290" cy="175" r="68" fill="#f5dfc5" opacity=".75"/>
+<path d="M330 470 Q580 395 770 470 T1120 450 T1600 430 V760 H330Z" fill="#647184" opacity=".55"/>
+<path d="M330 560 Q560 495 780 560 T1180 535 T1600 555 V760 H330Z" fill="#39495c" opacity=".72"/>
+<g fill="#253344" opacity=".72">
+ <path d="M420 580h44v-92h36v92h25v-135h42v135h30v-72h38v72h28v-164h48v164h32v-102h45v102h40v-142h40v142h25v-78h35v78h35v-118h48v118h35v-66h35v66h35v-150h50v150h40v-95h35v95h30v-130h44v130h35v-73h42v73h30v-115h45v115h35v-85h45v85h40v-135h48v135h30v-65h42v65h35v-105h45v105h35v-78h40v78h20v180H420Z"/>
+</g>
+<g fill="#f8c99e" opacity=".8">
+ <circle cx="480" cy="555" r="3"/><circle cx="560" cy="590" r="3"/><circle cx="710" cy="540" r="3"/><circle cx="835" cy="600" r="3"/><circle cx="990" cy="550" r="3"/><circle cx="1120" cy="620" r="3"/><circle cx="1280" cy="560" r="3"/><circle cx="1430" cy="610" r="3"/>
+</g>
+<rect x="330" y="0" width="18" height="760" fill="#171a20"/><rect x="955" y="0" width="13" height="760" fill="#34343a"/><rect x="1580" y="0" width="20" height="760" fill="#171a20"/>
+<rect x="330" y="745" width="1270" height="24" fill="#302b2b"/>
+<rect x="0" y="0" width="330" height="900" fill="#22242a"/>
+<g opacity=".8" fill="#a58b75"><rect x="30" y="150" width="245" height="15"/><rect x="30" y="330" width="245" height="15"/><rect x="30" y="510" width="245" height="15"/></g>
+<g fill="#b6a08d" opacity=".8"><rect x="55" y="95" width="48" height="52"/><rect x="115" y="70" width="75" height="77"/><rect x="200" y="110" width="55" height="37"/><rect x="55" y="270" width="80" height="60"/><rect x="150" y="245" width="45" height="85"/><rect x="210" y="280" width="45" height="50"/></g>
+<rect x="0" y="770" width="1600" height="130" fill="#292326"/>
+<path d="M0 800 Q500 760 900 800 T1600 790 V900 H0Z" fill="#46352f"/>
+<!-- seated figure -->
+<ellipse cx="560" cy="775" rx="185" ry="35" fill="#17191e" opacity=".55"/>
+<path d="M445 480 Q420 430 455 380 Q505 315 565 365 Q620 410 600 495 L650 690 Q630 755 555 760 L400 740 Q390 650 445 480Z" fill="#d4c2ad"/>
+<path d="M445 470 Q405 530 390 650 L370 770 L565 790 Q610 700 580 590 L545 480Z" fill="#b7a28f"/>
+<circle cx="510" cy="340" r="66" fill="#332a29"/>
+<path d="M450 340 Q455 250 535 265 Q595 280 570 365 Q550 320 510 315 Q485 350 450 340Z" fill="#252326"/>
+<path d="M475 395 Q500 430 550 410" stroke="#8f6f5f" stroke-width="10" fill="none" opacity=".5"/>
+<!-- cat -->
+<path d="M75 785 Q85 715 165 720 Q240 720 255 785 Q230 830 130 830 Q75 820 75 785Z" fill="#9b8b7b"/>
+<path d="M95 740 L100 695 L135 720 M190 720 L225 690 L230 745" fill="#9b8b7b"/>
+<path d="M110 775 Q140 790 165 775" stroke="#e8d9c9" stroke-width="5" fill="none"/>
+<!-- table, book, cup, camera -->
+<path d="M690 795 H1510 L1460 850 H730Z" fill="#6d5140"/><path d="M735 850v50h22v-50m680 0v50h22v-50" fill="#302621"/>
+<rect x="800" y="755" width="210" height="32" rx="4" fill="#d0bba4"/><rect x="815" y="742" width="190" height="15" rx="3" fill="#8f7765"/>
+<path d="M1080 755h85v45h-85z" fill="#d6c8b7"/><path d="M1095 755q25-55 55 0" fill="#d6c8b7"/>
+<rect x="1225" y="750" width="125" height="65" rx="12" fill="#292b30"/><circle cx="1285" cy="782" r="27" fill="#66717b"/><circle cx="1285" cy="782" r="17" fill="#1b2027"/>
+<g fill="#d9d0c3" opacity=".9"><circle cx="1450" cy="710" r="5"/><circle cx="1470" cy="690" r="6"/><circle cx="1490" cy="715" r="5"/></g>
+<rect x="0" y="0" width="1600" height="900" fill="url(#glass)"/>
+<text x="860" y="220" fill="#222b3a" font-size="74" font-family="serif" letter-spacing="5">我们之间，</text>
+<text x="860" y="315" fill="#222b3a" font-size="74" font-family="serif" letter-spacing="5">隔着一个无法抵达的自己</text>
+<path d="M860 350 Q1130 365 1510 340" stroke="#354050" stroke-width="2" fill="none" opacity=".7"/>
+<text x="870" y="425" fill="#30313a" font-size="26" font-family="serif">有些距离，不在远方，而在两颗心之间。</text>
+<text x="870" y="475" fill="#30313a" font-size="22" font-family="serif">关于独处、理解，以及如何不弄丢自己。</text>
+<text x="870" y="535" fill="#34343b" font-size="19" font-family="serif" letter-spacing="4">纳兰的个人小站 · 随笔</text>
+</svg>
