@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+<defs>
+ <linearGradient id="night" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1e2935"/><stop offset=".55" stop-color="#667789"/><stop offset="1" stop-color="#d0a58a"/></linearGradient>
+ <linearGradient id="window" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8194a7"/><stop offset=".55" stop-color="#c6b7ad"/><stop offset="1" stop-color="#e2b99a"/></linearGradient>
+ <linearGradient id="lamp" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8d9a5"/><stop offset="1" stop-color="#9d7251"/></linearGradient>
+ <filter id="soft"><feGaussianBlur stdDeviation="20"/></filter>
+</defs>
+<rect width="1600" height="900" fill="#24252a"/>
+<rect x="0" y="0" width="670" height="900" fill="#29282a"/>
+<!-- bookcase -->
+<g fill="#594638"><rect x="0" y="150" width="630" height="18"/><rect x="0" y="360" width="630" height="18"/><rect x="0" y="570" width="630" height="18"/><rect x="0" y="780" width="630" height="18"/></g>
+<g>
+ <path d="M35 35h42v110H35z" fill="#8b6248"/><path d="M92 55h38v90H92z" fill="#b29a7b"/><path d="M145 20h52v125h-52z" fill="#52606a"/><path d="M210 48h40v97h-40z" fill="#a47b5d"/><path d="M265 30h55v115h-55z" fill="#d1b99b"/><path d="M335 58h38v87h-38z" fill="#6c5960"/><path d="M390 20h55v125h-55z" fill="#9b795d"/><path d="M460 43h45v102h-45z" fill="#6f7b7d"/><path d="M520 27h55v118h-55z" fill="#b08c6b"/>
+ <path d="M30 195h48v150H30z" fill="#b28b68"/><path d="M90 210h38v135H90z" fill="#63717a"/><path d="M145 188h55v157h-55z" fill="#8b644d"/><path d="M215 220h42v125h-42z" fill="#c5ad8d"/><path d="M275 195h45v150h-45z" fill="#6b5960"/><path d="M340 208h50v137h-50z" fill="#a27a5d"/><path d="M405 190h42v155h-42z" fill="#6d7a78"/><path d="M465 215h42v130h-42z" fill="#c0a88a"/><path d="M525 190h50v155h-50z" fill="#8b6b56"/>
+ <path d="M40 405h42v150H40z" fill="#64727a"/><path d="M95 395h55v160H95z" fill="#a47b5d"/><path d="M165 420h42v135h-42z" fill="#d1b99b"/><path d="M220 390h55v165h-55z" fill="#75616a"/><path d="M290 410h45v145h-45z" fill="#9d785e"/><path d="M350 395h52v160h-52z" fill="#596875"/><path d="M420 420h42v135h-42z" fill="#b89c7e"/><path d="M480 395h45v160h-45z" fill="#7a5d4d"/><path d="M540 415h42v140h-42z" fill="#c0a88a"/>
+</g>
+<!-- window -->
+<rect x="670" y="0" width="930" height="750" fill="url(#window)"/>
+<g opacity=".55" fill="#536475">
+ <path d="M670 440 Q830 370 970 435 T1260 420 T1600 390 V750 H670Z"/>
+ <path d="M670 520 Q850 455 1020 510 T1320 485 T1600 470 V750 H670Z" opacity=".65"/>
+</g>
+<g fill="#31404d" opacity=".7">
+ <path d="M720 540h70v-90h42v90h32v-130h52v130h38v-80h40v80h35v-155h50v155h30v-95h45v95h40v-120h55v120h30v-75h44v75h35v-145h52v145h32v-100h45v100h35v-125h55v125h40v-75h48v75h35v-115h55v115h40v-85h50v85h20v210H720Z"/>
+</g>
+<!-- rain -->
+<g stroke="#f1e5dc" stroke-width="2" opacity=".45"><path d="M770 50l-22 55M850 120l-18 50M930 35l-18 52M1040 100l-20 55M1150 40l-18 55M1260 135l-20 58M1380 50l-20 55M1490 120l-18 52"/></g>
+<rect x="660" y="0" width="22" height="770" fill="#171a20"/><rect x="1120" y="0" width="14" height="750" fill="#35383e"/><rect x="1580" y="0" width="20" height="770" fill="#171a20"/>
+<!-- warm lamp -->
+<path d="M105 175 Q185 120 275 175 L245 215 H135Z" fill="#17191e"/><path d="M190 210v100" stroke="#17191e" stroke-width="10"/><ellipse cx="190" cy="225" rx="78" ry="30" fill="url(#lamp)" opacity=".75" filter="url(#soft)"/><ellipse cx="190" cy="214" rx="70" ry="15" fill="#f5d6a5"/>
+<!-- seated silhouette -->
+<ellipse cx="520" cy="790" rx="220" ry="35" fill="#15171b" opacity=".6"/>
+<path d="M355 510 Q350 425 420 380 Q485 340 535 395 Q590 455 565 555 L650 770 H330Z" fill="#27272a"/>
+<circle cx="460" cy="340" r="67" fill="#bd9277"/>
+<path d="M395 350 Q375 245 470 245 Q560 250 535 365 Q510 320 460 305 Q430 350 395 350Z" fill="#292329"/>
+<path d="M405 420 Q350 450 335 560 L290 770 H575 L540 555 Q515 450 470 420Z" fill="#343337"/>
+<!-- cat curled -->
+<path d="M40 800 Q55 720 150 720 Q245 720 260 800 Q230 850 120 850 Q50 845 40 800Z" fill="#9a8877"/><path d="M65 750l-2-42 35 28m90 0 38-30-4 50" fill="#9a8877"/>
+<!-- desk -->
+<path d="M0 790 H1600 V900 H0Z" fill="#3d302b"/><path d="M640 790 H1540 L1480 850 H690Z" fill="#775941"/>
+<rect x="780" y="745" width="170" height="35" rx="4" fill="#c7b49d"/><rect x="795" y="730" width="150" height="15" fill="#8f7966"/>
+<path d="M1030 750h70v45h-70z" fill="#d8c9b5"/><path d="M1042 750q22-48 46 0" fill="#d8c9b5"/>
+<rect x="1190" y="742" width="120" height="60" rx="8" fill="#252a30"/><circle cx="1250" cy="772" r="24" fill="#65727a"/><circle cx="1250" cy="772" r="15" fill="#20252b"/>
+<!-- typography -->
+<rect x="690" y="0" width="910" height="750" fill="#d9e0e2" opacity=".12"/>
+<text x="760" y="210" fill="#202b38" font-size="82" font-family="serif" letter-spacing="10">独语，</text>
+<text x="760" y="315" fill="#202b38" font-size="62" font-family="serif" letter-spacing="4">是与世界的另一种对话</text>
+<path d="M760 355 Q1110 370 1510 350" stroke="#394957" stroke-width="2" fill="none"/>
+<text x="770" y="435" fill="#263340" font-size="25" font-family="serif">有些话，先说给自己听。</text>
+<text x="770" y="500" fill="#35414a" font-size="20" font-family="serif">关于独处、表达欲，以及那些无人听见的心事。</text>
+<text x="770" y="565" fill="#35414a" font-size="18" font-family="serif" letter-spacing="5">纳兰的个人小站 · 随笔</text>
+</svg>
