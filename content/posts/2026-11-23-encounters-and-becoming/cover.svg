@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="薄雾中的湖泊、日出与渐行渐远的两个人">
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#e7d9cf"/><stop offset=".55" stop-color="#f6d9bd"/><stop offset="1" stop-color="#b6c5c4"/></linearGradient>
+ <linearGradient id="water" x2="0" y2="1"><stop stop-color="#a9b8b5"/><stop offset=".55" stop-color="#839b9b"/><stop offset="1" stop-color="#344c52"/></linearGradient>
+ <linearGradient id="sun" x2="0" y2="1"><stop stop-color="#fff1cf"/><stop offset="1" stop-color="#e8ae75"/></linearGradient>
+ <linearGradient id="mist" x2="0" y2="1"><stop stop-color="#fff" stop-opacity=".72"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="18"/></filter>
+ <linearGradient id="shade" x2="0" y2="1"><stop stop-color="#172b31" stop-opacity="0"/><stop offset="1" stop-color="#172b31" stop-opacity=".58"/></linearGradient>
+</defs>
+<rect width="1200" height="675" fill="url(#sky)"/>
+<circle cx="660" cy="242" r="52" fill="#ffe8c5" opacity=".55" filter="url(#blur)"/>
+<circle cx="660" cy="242" r="25" fill="url(#sun)"/>
+<path d="M0 300 Q170 205 330 275 T650 280 T980 230 T1200 260 V420 H0Z" fill="#89999a" opacity=".38"/>
+<path d="M0 340 Q180 270 370 330 T760 318 T1200 290 V430 H0Z" fill="#657d80" opacity=".42"/>
+<path d="M0 370 Q210 335 390 360 T760 350 T1200 335 V675 H0Z" fill="url(#water)"/>
+<path d="M0 398 Q220 380 410 399 T810 395 T1200 380" stroke="#f9e2c8" stroke-opacity=".45" stroke-width="3" fill="none"/>
+<path d="M640 270 L620 675 H705 L675 270Z" fill="#f6d9ae" opacity=".28"/>
+<path d="M640 286 Q662 365 650 430 T680 560 T665 675" stroke="#ffe3bd" stroke-opacity=".5" stroke-width="15" fill="none"/>
+<ellipse cx="530" cy="390" rx="520" ry="34" fill="#fff" opacity=".3" filter="url(#blur)"/>
+<ellipse cx="870" cy="360" rx="420" ry="28" fill="#fff" opacity=".34" filter="url(#blur)"/>
+<!-- distant hills -->
+<path d="M0 360 Q130 315 250 355 T510 344 T790 345 T1040 325 T1200 340" stroke="#53696d" stroke-opacity=".3" stroke-width="5" fill="none"/>
+<!-- dock -->
+<path d="M0 590 L470 590 L610 675 H0Z" fill="#594f48"/>
+<path d="M0 603 L468 603 L490 616 L0 616Z M0 632 L518 632 L540 645 L0 645Z M0 660 L565 660 L586 675 L0 675Z" fill="#8c7765" opacity=".8"/>
+<path d="M80 590 V675 M220 590 V675 M360 590 V675" stroke="#3c3b37" stroke-width="5" opacity=".6"/>
+<!-- left person -->
+<ellipse cx="325" cy="574" rx="35" ry="8" fill="#1c3035" opacity=".3"/>
+<path d="M309 420 Q286 437 286 486 L280 555 Q299 570 340 557 L341 486 Q343 442 329 420Z" fill="#d9d0c4"/>
+<path d="M306 420 Q300 397 313 384 Q333 378 341 399 L337 428Z" fill="#2d2928"/>
+<path d="M306 403 Q303 365 326 359 Q348 365 345 404 Q338 422 325 423 Q311 420 306 403Z" fill="#282729"/>
+<path d="M292 449 L275 516 L287 520 L307 469 M337 448 L355 510 L344 515 L327 469" stroke="#d9d0c4" stroke-width="15" stroke-linecap="round"/>
+<path d="M299 555 L297 578 M328 555 L330 578" stroke="#262d30" stroke-width="11" stroke-linecap="round"/>
+<path d="M285 580 L307 580 M320 580 L341 580" stroke="#e7e1d9" stroke-width="10" stroke-linecap="round"/>
+<!-- right person, farther away -->
+<ellipse cx="1010" cy="548" rx="24" ry="6" fill="#1c3035" opacity=".25"/>
+<path d="M995 426 Q985 438 987 470 L985 520 Q1008 531 1030 519 L1027 468 Q1030 440 1018 426Z" fill="#34454a"/>
+<circle cx="1008" cy="410" r="14" fill="#302f30"/>
+<path d="M991 438 L976 487 M1023 438 L1037 482" stroke="#34454a" stroke-width="10" stroke-linecap="round"/>
+<path d="M996 520 L994 547 M1018 520 L1021 547" stroke="#29383b" stroke-width="8" stroke-linecap="round"/>
+<!-- reeds -->
+<g stroke="#4e625d" stroke-width="4" fill="none" opacity=".7"><path d="M0 675 Q35 565 20 500 M24 675 Q68 570 72 520 M48 675 Q100 590 115 540 M1140 675 Q1110 565 1135 500 M1170 675 Q1155 590 1187 540"/></g>
+<rect width="1200" height="675" fill="url(#shade)"/>
+<text x="72" y="78" fill="#fffaf2" font-family="Georgia,serif" font-size="18" letter-spacing="5" opacity=".9">NOTES ON MEETING &amp; PARTING</text>
+<text x="72" y="540" fill="#fffaf2" font-family="serif" font-size="43" letter-spacing="2">相遇，是为了遇见更完整的自己</text>
+<text x="76" y="578" fill="#f3e8dc" font-family="sans-serif" font-size="17" letter-spacing="4">在别人的眼睛里，看见未曾认识的自己</text>
+</svg>
